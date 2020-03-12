@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/head :: common_head(~{::title},~{})}">
+    <title>添加管理员</title>
+</head>
+<body>
+
+
+<!--加载-->
+<div th:replace="~{commons/page-top :: common_top_onLoad}"></div>
+
+
+<!--  插入导航 -->
+<div th:replace="~{commons/page-top :: common_top}"></div>
+
+<!--主体-->
+<div class="main-container container-fluid">
+    <div class="page-container" style="">
+        <!--       公共片段的引入-->
+        <div th:replace="~{commons/page-top :: common_side}"></div>
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="index.html">首页</a></li>
+                </ol>
+            </div>
+            <div class="page-header position-relative">
+                <div class="header-title title-h1">管理员管理</div>
+            </div>
+
+            <div class="page-body">
+                <!--                这里是页面主体 显示部分 开始-->
+
+                <!--基本表单开始--->
+                <div class="col-lg-12">
+                    <div class="widget">
+                        <div class="widget-header">
+                            添加管理员
+                        </div>
+                        <div class="widget-body">
+
+                            <form class="form-horizontal form-signin" id="registerForm" method="post" th:action="@{/admin/add}"
+                                  enctype="multipart/form-data"
+                            >
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-4 pull-right-lg">
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 form-upload">
+                                                        <input type="file" class="form-control upload-input" id="uploadInput1" name="picture1">
+                                                        <img th:src="@{/resource/images/upload-click.jpg}" class="upload-img" id="uploadImg1">
+                                                    </div>
+                                                    <p class="col-sm-12 form-upload-title">二寸免冠照片，最大500KB</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-8 pull-left-lg">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">姓名</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" placeholder="张狗蛋" name="name"
+                                                               value="张全蛋">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">身份证号</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" placeholder="身份证号" name="idCard"
+                                                               value="610322199876547389">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">性别</label>
+
+                                                    <div class="col-sm-9">
+                                <span class="">
+                                    <input type="radio" value="1" name="sex"> 男
+                                    <input type="radio" value="0" name="sex"> 女
+                                </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">密码</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" placeholder="请输入密码" name="password"
+                                               required data-bv-notempty-message="密码是必填的，不能为空"
+                                               data-bv-identical="true" data-bv-identical-field="confirmPassword" data-bv-identical-message="密码和确认密码不同"
+                                               data-bv-different="true" data-bv-different-field="userName" data-bv-different-message="密码不能与用户名相同"
+                                               data-bv-message="用户名无效"
+                                               pattern="[a-zA-Z0-9]+"
+                                               value="zaq12wsx"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">确认密码</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" placeholder="请输入密码" name="confirmPassword"
+                                               required data-bv-notempty-message="密码是必填的，不能为空"
+                                               data-bv-identical="true" data-bv-identical-field="password" data-bv-identical-message="码和确认密码不同"
+                                               data-bv-different="true" data-bv-different-field="userName" data-bv-different-message="密码不能与用户名相同"
+                                               value="zaq12wsx"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">电话</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" placeholder="13500000000" name="phone" value="13232344354">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">邮箱</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" placeholder="xxxxxx@qq.com" name="email" value="117850@qq.com">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">地址</label>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+
+
+                                            <div class="col-md-3">
+
+
+                                                <select id="select1" class="form-control" name="address1" style="width: 200px;">
+                                                    <option>省</option>
+
+                                                </select>
+
+                                            </div>
+                                            <div class="col-md-3">
+
+
+                                                <select id="select2" class="form-control" name="address2" style="width: 200px;">
+                                                    <option>市</option>
+
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-3">
+
+
+                                                <select id="select3" class="form-control" name="address3" style="width: 200px;">
+                                                    <option >区|县</option>
+                                                </select>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">具体地址</label>
+                                    <div class="col-sm-9">
+                <textarea class="col-sm-12 form-control" placeholder="详细地址" name="addressDetail"
+                > 陈村镇李家堡村32组 </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class=" col-sm-offset-2 col-sm-9">
+                                        <button class="btn btn-default btn-primary btn-block btn-register" type="submit" data-href="login.html" data-filter="#registerForm">提交</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-11 text-right">
+                                        <button type="button" class="btn btn-warning  "
+                                                id="fileUploadIdCard" >
+                                            <i class="glyphicon glyphicon-circle-arrow-up"></i>上传身份证
+                                        </button>
+                                        <input id="fileIdCard" type="file" class="" style="display: none" name="idpicture1">
+
+                                    </div>
+                                </div>
+
+
+                            </form>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <!--                这里是页面主体 显示部分 结束-->
+            </div><!---page-body---->
+        </div><!--page-wrapper--->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div th:replace="~{commons/onLoanJs :: js}"></div>
+
+<script>
+    $(function () {
+        //发送省ajax
+        $.get("address",{
+            id:"0"
+        },function (date) {
+            $("#select1").empty()
+            $.each(date,function (index,item) {
+                $("#select1").append("<option value="+item.id+">"+item.text+" </option>")
+            });
+        });
+
+        $("#select1").change(function () {
+            var selectObj = $(this).children('option:selected');
+            var aValue = selectObj.attr("value");
+            console.log(aValue)
+            $.get("address",{
+                id:aValue
+            },function (date) {
+                $("#select2").empty()
+                $("#select2").append("<option value='-1'>市</option>")
+                $("#select3").empty()
+                $("#select3").append("<option value='-2'>县|区</option>");
+                console.log(date);
+                $.each(date,function (index,item) {
+                    $("#select2").append("<option value="+item.id+">"+item.text+" </option>")
+                });
+            });
+
+        });
+
+        $("#select2").change(function () {
+            var selectObj = $(this).children('option:selected');
+            var aValue = selectObj.attr("value");
+            console.log(aValue)
+            $.get("address",{
+                id:aValue
+            },function (date) {
+                $("#select3").empty()
+                $("#select3").append("<option value='-2'>区|县</option>");
+                console.log(date);
+                $.each(date,function (index,item) {
+                    $("#select3").append("<option value="+item.id+">"+item.text+" </option>")
+                });
+            });
+
+
+        })
+
+
+
+
+
+
+
+
+
+        $("#fileUploadIdCard").click(function () {
+            $("#fileIdCard").click();
+
+        });
+
+        $("#uploadImg1").click(function () {
+
+            $("#uploadInput1").click();
+
+        });
+
+
+
+
+
+
+
+
+    });
+</script>
+
+
+</body>
+</html>

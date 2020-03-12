@@ -1,0 +1,28 @@
+.center-picture{
+    width: 300px;
+    height: 260px;
+    background-color: #0C0C0C;
+    top: 75px;
+}
+.process_user{
+    background-color: #0b141f;
+    height: 5px;
+}
+.com-sel {
+    line-height: 5rem;
+    cursor: pointer;        /*鼠标上移变成小手*/
+}
+
+.com-opt {
+    padding-right: 1.8rem;
+    color: #afbac0;
+    font-size: 1.6rem;
+    border: none;
+    outline: none;
+    /*去掉默认的下拉三角*/
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    /*添加下拉三角图标*/
+    background: url("../images/select_user.jpeg") no-repeat right center transparent;
+}

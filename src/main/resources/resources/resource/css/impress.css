@@ -1,0 +1,56 @@
+/*
+*
+*/
+/*底部*/
+
+.footerfix{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 23px;
+    line-height: 1.5;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+}
+.text-center{
+    text-align: center;
+    color: #eee;
+}
+h1,h1{
+    font-size: 35px;
+}
+h2,h2{
+    font-size: 30px;
+}
+h3,h3{
+    font-size: 25px;
+}
+h4,h4{
+    font-size: 20px;
+}
+h5,h5{
+    font-size: 16px;
+}
+h6,h6{
+    font-size: 13px;
+}
+
+/*第一页*/
+.banner1{
+    background: url('../images/impress/7.jpg') no-repeat;background-size: cover
+}
+/*第二页*/
+.banner2{
+    background: url('../images/impress/1.jpg') no-repeat;background-size: cover;
+    background: rebeccapurple;
+}
+/*第三页*/
+.banner3{
+    background: url('../images/impress/3.jpg') no-repeat;background-size: cover
+}
+.banner4{
+    background-color: #fff;
+    padding: 20px;
+}

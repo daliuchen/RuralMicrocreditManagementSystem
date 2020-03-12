@@ -1,0 +1,419 @@
+/**
+ * Created by 刘志远 on 2017/7/2
+ */
+
+// 所有配置项在这
+var CONFIG = {
+    POPUP_AFFIRM : '确定'
+
+};
+
+// 声明一个全局变量，所有公用方法都挂载在这里 常用类 弹框：Popup 模态框：Modal 加载中：Loading
+var Xn = {};
+
+// 工具类方法集合 PC端检测 获取地址参数 大小写转换
+Xn.Utils = {};
+
+/**
+ * 弹出框
+ * 使用方法： var popup = Popup(); popup.alert(); 不需要加new，内部已经封装好
+ */
+Xn.Popup = (function ($){
+    /**
+     * @param options 配置项，原则来说应该是{}config对象，但这里提供一种快捷方式 Popup('提示内容')/甚至 Popup($('.pop-test').html())
+     */
+    var Popup = function (options) {
+        var config = {
+            title : '温馨提示', // 弹框标题
+            text : '内容为空',  // 弹框内容
+            bgClick : false,   // 点击背景是否可关闭
+            affirm : '确认',   // 确定按钮文字
+            cancel : '取消'    // 取消按钮文字
+        };
+
+        // 类型检测，检测是否是对象 提供一种快捷方式，直接弹出内容
+        if(typeof options === 'string') {
+            config.text = options;
+        }else if(typeof options === 'object'){
+            config = $.extend(config,options);
+        }
+
+        return new Popup.fn._init_(config);
+    };
+    Popup.fn = Popup.prototype = {
+        constructor : Popup,
+        _init_ : function (config) {
+            var _this = this,
+                popupHtml;
+
+            popupHtml = '<div class="pop-container">' +
+                '<div class="bg-shadow"></div>' +
+                '<div class="pop-up">' +
+                '<div class="pop-content">' +
+                '<div class="pop-title">' +
+                '<h2>'+ config.title +'</h2>' +
+                '<span class="close"><i class="icon icon-close"></i></span>' +
+                '</div>' +
+                '<div class="pop-body">'+config.text+'</div>' +
+                '<div class="button-wrap">' +
+                '<button class="btn affirm">'+config.affirm+'</button>' +
+                '<button class="btn cancel">'+config.cancel+'</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+            this.element = $(popupHtml);
+            $('body').append(this.element);
+
+            if(config.bgClick === true){
+                this.element.find('.bg-shadow').on('click',function () {
+                    _this.hide()
+                })
+            }
+
+            this.element.find('.close').on('click',function () {
+                _this.hide();
+            });
+        },
+        /**  以下为主要正文以及调用部分 */
+        alert : function (successCallback) {
+            this.element.find('.cancel').hide();
+            this.show(successCallback);
+        },
+        confirm : function (successCallback,cancelCallback) {
+            this.element.find('.cancel').show();
+            this.show(successCallback,cancelCallback);
+        },
+        /**
+         * @param successCallback 点击确定按钮触发确定回调函数
+         * @param cancelCallback 点击取消按钮触发取消回调函数
+         */
+        show : function (successCallback,cancelCallback) {
+            var _this = this,
+                element = this.element;
+
+            element.removeClass('hide').addClass('on');
+
+            // 监听确定和取消按钮点击事件，执行回调函数
+            element.find('.affirm').on('click',function () {
+                _this.hide();
+                if(typeof successCallback === 'function'){
+                    successCallback();
+                }
+            });
+            element.find('.cancel').on('click',function () {
+                _this.hide();
+                if(typeof cancelCallback === 'function'){
+                    cancelCallback();
+                }
+            });
+            // 弹出时禁止页面滚动
+            $('body').css({'overflow':'hidden'});
+        },
+        hide : function () {
+            var element = this.element;
+
+            element.addClass('hide');
+            setTimeout(function () {
+                element.remove();
+            },300);
+
+            // 关闭弹窗时移除监听事件
+            // element.find('.affirm').unbind();
+            // element.find('.cancel').unbind();
+            // element.find('.bg-shadow').unbind();
+
+            // 关闭时释放页面滚动
+            $('body').css({'overflow':'auto'});
+        }
+    };
+    Popup.fn._init_.prototype = Popup.fn;
+
+    return Popup;
+})(jQuery);
+
+/**
+ * 模态框
+ * 使用方法： var modal = Modal(); 不需要加new，内部已经封装好
+ */
+Xn.Modal = (function ($){
+    /**
+     * @param template 需要弹出的容器，id或class 如 Modal('.modal') /Modal('#template-modal')
+     * @param direction 弹出方向 可选项 slide-in-up slide-in-left slide-in-down 默认第一个，可根据需求 @刘志远 制定不同动效
+     */
+    var Modal = function (template,direction,modalActive) {
+        return new Modal.fn._init_(template,direction,modalActive);
+    };
+    Modal.fn = Modal.prototype = {
+        constructor : Modal,
+        _init_ : function (template,direction,modalActive) {
+            var modalHtml = $(template).html(),
+                modalTop ,
+                _this = this,
+                animate = 'slide-in-up';
+
+            if(typeof direction === 'string' && direction !== 'undefined') {
+                animate = direction;
+            }
+
+            modalTop = '<div class="modal-backdrop hide">' +
+                '<div class="modal-backdrop-bg"></div>' +
+                '<div class="modal-wrapper"></div>' +
+                '</div>';
+
+            this.element = $(modalTop);
+            this.element.find('.modal-wrapper').html(modalHtml);
+            this.element.find('.modal').addClass(animate);
+
+            if(this.element.find('.modal').hasClass('modal-top')){
+                this.element.addClass('modal-backdrop-top');
+            }
+            $('body').append(this.element);
+
+            // 点击背景关闭
+            this.element.find('.modal-backdrop-bg').click(function () {
+                if(modalActive=='true'){
+                    _this.hide();
+                }
+
+            });
+
+            this.element.find('.close').click(function () {
+                _this.hide();
+            })
+
+        },
+        /** 检测是否显示 */
+        isShow : function () {
+            return !this.element.hasClass('hide');
+        },
+        show : function () {
+            var el = this.element,
+                modalEl = el.find('.modal');
+            el.removeClass('hide');
+            setTimeout(function () {
+                el.addClass('active');
+                modalEl.removeClass('leave leave-active').addClass('enter enter-active');
+            },0);
+            $('.fundProject-list').css({'overflow-y':'hidden'});
+
+        },
+        hide : function () {
+            var el = this.element,
+                modalEl = el.find('.modal');
+
+            modalEl.removeClass('enter enter-active').addClass('leave leave-active');
+            el.removeClass('active');
+            setTimeout(function () {
+                el.addClass('hide');
+            },300);
+            $('.fundProject-list').css({'overflow-y':'auto'});
+
+            // el.find('.modal-backdrop-bg').unbind()
+        }
+    };
+    Modal.fn._init_.prototype = Modal.fn;
+
+    return Modal;
+})(jQuery);
+/**
+ * 加载框
+ * 使用方法： var loading = Xn.Loading();
+ */
+Xn.Loading = function () {
+    var el, loadHtml;
+    loadHtml = '<div class="loading-container visible">' +
+        '<div class="loading">' +
+        '<div class="loader"></div>' +
+        '<p>加载中...</p>' +
+        '</div>' +
+        '</div>';
+    el = $(loadHtml);
+
+    $('body').append(el);
+    // 方法
+    this.show = function () {
+        el.addClass('visible');
+        setTimeout(function () {
+            el.addClass('active');
+        },20);
+    };
+    this.hide = function () {
+        el.removeClass('active');
+        setTimeout(function () {
+            el.removeClass('visible');
+        },200);
+    };
+
+    return this;
+};
+
+/**
+ * @param name 需要查询地址栏的参数名称
+ */
+Xn.Utils.getQueryString = function (name) {
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!==null) {
+        return  decodeURI(r[2]);
+    }
+    return null;
+};
+
+/** 转换大写方法
+ * @param num 金额
+ * @param type 类型 元 或者 份
+ */
+Xn.Utils.jqNumToMoney = function(num,type) {
+    if(num === 'undefined'){
+        console.warn("转换金额为空");
+        return;
+    }
+    var n = Math.abs(num);
+    var fraction = ['角','分'],
+        digit = ['零','壹','贰','叁','肆','伍','陆','柒','捌','玖'],
+        unit = [['元','万','亿'],['','拾','佰','仟']],
+        head = n < 0?'欠':'';
+    var s = '', val, i;
+    for (i = 0; i < fraction.length; i++) {
+        s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+    }
+    s = s || '整';
+    n = Math.floor(n);
+    for (i = 0; i < unit[0].length && n > 0; i++) {
+        var p = '';
+        for (var j = 0; j < unit[1].length && n > 0; j++) {
+            p = digit[n % 10] + unit[1][j] + p;
+            n = Math.floor(n / 10);
+        }
+        s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
+    }
+    val = head + s.replace(/(零.)*零元/,'元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
+    if(type !== 'undefined'){
+        val = val.replace(/元/g, type)
+    }
+    return val;
+};
+
+/** 是否是电脑 */
+Xn.Utils.isPC = (function () {
+    var isPC;
+    return function () {
+        // 检测是否是第一次执行，如果是则继续，否则直接调用返回值，节约性能不用每次都计算
+        if(typeof isPC !== 'undefined') {
+            return isPC;
+        }else {
+            var userAgentInfo = navigator.userAgent;
+            var Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];
+            var flag = true;
+            for (var i = 0; i < Agents.length; i++) {
+                if (userAgentInfo.indexOf(Agents[i]) !== -1) {
+                    flag = false;
+                    break;
+                }
+            }
+            isPC = flag;
+            return flag;
+        }
+    }
+})();
+
+
+//分页插件
+(function($){
+    var ms = {
+        init:function(obj,args){
+            return (function(){
+                ms.fillHtml(obj,args);
+                ms.bindEvent(obj,args);
+            })();
+        },
+        //填充html
+        fillHtml:function(obj,args){
+            return (function(){
+                obj.empty();
+                //上一页
+                if(args.current > 1){
+                    obj.append('<a href="javascript:;" class="prevPage">上一页</a>');
+                }else{
+                    obj.remove('.prevPage');
+                    obj.append('<span class="disabled">上一页</span>');
+                }
+                //中间页码
+                if(args.current !== 1 && args.current >= 4 && args.pageCount !== 4){
+                    obj.append('<a href="javascript:;" class="tcdNumber">'+1+'</a>');
+                }
+                if(args.current-2 > 2 && args.current <= args.pageCount && args.pageCount > 5){
+                    obj.append('<span>...</span>');
+                }
+                var start = args.current -2,end = args.current+2;
+                if((start > 1 && args.current < 4)||args.current === 1){
+                    end++;
+                }
+                if(args.current > args.pageCount-4 && args.current >= args.pageCount){
+                    start--;
+                }
+                for (;start <= end; start++) {
+                    if(start <= args.pageCount && start >= 1){
+                        if(start !== args.current){
+                            obj.append('<a href="javascript:;" class="tcdNumber">'+ start +'</a>');
+                        }else{
+                            obj.append('<span class="current">'+ start +'</span>');
+                        }
+                    }
+                }
+                if(args.current + 2 < args.pageCount - 1 && args.current >= 1 && args.pageCount > 5){
+                    obj.append('<span>...</span>');
+                }
+                if(args.current !== args.pageCount && args.current < args.pageCount -2  && args.pageCount !== 4){
+                    obj.append('<a href="javascript:;" class="tcdNumber">'+args.pageCount+'</a>');
+                }
+                //下一页
+                if(args.current < args.pageCount){
+                    obj.append('<a href="javascript:;" class="nextPage">下一页</a>');
+                }else{
+                    obj.remove('.nextPage');
+                    obj.append('<span class="disabled">下一页</span>');
+                }
+            })();
+        },
+        //绑定事件
+        bindEvent:function(obj,args){
+            return (function(){
+                obj.on("click","a.tcdNumber",function(){
+                    var current = parseInt($(this).text());
+                    ms.fillHtml(obj,{"current":current,"pageCount":args.pageCount});
+                    if(typeof(args.backFn)==="function"){
+                        args.backFn(current);
+                    }
+                });
+                //上一页
+                obj.on("click","a.prevPage",function(){
+                    var current = parseInt(obj.children("span.current").text());
+                    ms.fillHtml(obj,{"current":current-1,"pageCount":args.pageCount});
+                    if(typeof(args.backFn)==="function"){
+                        args.backFn(current-1);
+                    }
+                });
+                //下一页
+                obj.on("click","a.nextPage",function(){
+                    var current = parseInt(obj.children("span.current").text());
+                    ms.fillHtml(obj,{"current":current+1,"pageCount":args.pageCount});
+                    if(typeof(args.backFn)==="function"){
+                        args.backFn(current+1);
+                    }
+                });
+            })();
+        }
+    };
+    $.fn.createPage = function(options){
+        var args = $.extend({
+            pageCount : 10,
+            current : 1,
+            backFn : function(){}
+        },options);
+        ms.init(this,args);
+    }
+})(jQuery);
+

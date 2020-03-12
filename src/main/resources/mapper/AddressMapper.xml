@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuchen.bishe.bishe.dao.AddressMapper">
+
+
+<!--    public List<AddressVo> searchAddress(int id);-->
+    
+    <resultMap id="addressMapper" type="com.liuchen.bishe.bishe.vo.AddressVo">
+        <id column="Id" property="id"/>
+        <result column="Name" property="text"/>
+        <result column="Pid" property="Pid"/>
+    </resultMap>
+
+    <select id="searchAddress" resultMap="addressMapper">
+        select * from china where Pid=#{id}
+    </select>
+
+
+
+<!--    public AddressVo findAddressById(int id);-->
+
+    <select id="findAddressById" resultMap="addressMapper">
+        select * from china where Id=#{id}
+    </select>
+
+
+</mapper>

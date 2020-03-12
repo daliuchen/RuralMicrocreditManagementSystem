@@ -1,0 +1,48 @@
+/**
+ * 此样式表，存放一些公共的样式-及扩展
+ **/
+/*功能模块的补充说明*/
+.title-info{
+    margin-bottom: 5px;
+    line-height: 25px;
+    color: #999;
+    text-indent: 2em;
+}
+.title-info.no-index{
+    text-indent: 0;
+}
+.bs-callout {
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 3px;
+    border-radius: 3px;
+}
+.bs-callout-primary {
+    border-left-color: #64b5ff;
+    background: #fff;
+}
+
+/*
+*  自定义提示-样式-开始
+*/
+.ui-dialog-alert p{
+    margin-bottom: 0;
+}
+/*成功*/
+.ui-bg-success{
+    background-color: #337ab7 !important;
+}
+/*提示*/
+.ui-bg-info{
+    background-color: #5bc0de !important;
+}
+/*警告*/
+.ui-bg-warning{
+    background-color: #f0ad4e !important;
+}
+/*失败*/
+.ui-bg-dange{
+    background-color: #d9534f !important;
+}
+/*自定义提示-样式-结束*/

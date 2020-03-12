@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuchen.bishe.bishe.dao.ScoreMapper">
+
+
+<!--    public Score findCustomerScoreById(int  id);-->
+        <select id="findCustomerScoreById" resultType="com.liuchen.bishe.bishe.entry.Score">
+            select * from  t_score where customerId=#{id} and isDelete=1 order by id;
+        </select>
+
+<!--    public void updateCustomerByIdCard(@Param("newScore") int newScore,@Param("id") int id);-->
+
+        <update id="updateCustomerByIdCard">
+            update t_score set score=#{newScore} where customerId=#{id} and isDelete=1;
+        </update>
+
+<!--    public void addScore(@Param("score") int score,@Param("id") int id);-->
+
+        <insert id="addScore" useGeneratedKeys="true" keyProperty="id">
+            insert into t_score (score,customerId) values (#{score},#{id})
+        </insert>
+
+<!--    public void deleteScore(int id);-->
+        <update id="deleteScore">
+            update t_score set isDelete=0 where customerId=#{id}
+        </update>
+
+
+</mapper>

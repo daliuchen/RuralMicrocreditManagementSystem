@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/head :: common_head(~{::title},~{})}">
+    <title>客户管理</title>
+
+</head>
+<body>
+
+
+<!--加载-->
+<div th:replace="~{commons/page-top :: common_top_onLoad}"></div>
+
+<!--  插入导航 -->
+<div th:replace="~{commons/page-top :: common_top}"></div>
+
+<!--主体-->
+<div class="main-container container-fluid">
+    <div class="page-container" style="">
+        <!--       公共片段的引入-->
+        <div th:replace="~{commons/page-top :: common_side}"></div>
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="index.html">首页</a></li>
+                </ol>
+            </div>
+            <div class="page-header position-relative">
+                <div class="header-title title-h1">管理员管理</div>
+            </div>
+
+            <div class="page-body">
+                <!--                这里是页面主体 显示部分 开始-->
+
+
+
+                <!--基本表单开始--->
+                <div class="col-lg-12">
+                    <div class="widget">
+                        <div class="widget-header">
+                            管理员列表
+                        </div>
+                        <div class="widget-body">
+
+                            <div class="btn-group-tool bootstrap-btn-group-tool row" style="margin-bottom: 10px">
+                                <div class="col-md-3">
+                                    <a th:href="@{/addAdmin}" class=""><button class="btn btn-success btn-add-alert">新增</button></a>
+
+                                    <button class="btn btn-default btn-del-List-2" id="deleteAdmins">批量删除</button>
+                                </div>
+
+                                <input type="text" class="col-md-2 col-md-offset-5 " id="searchCustomerInput" placeholder="请输入身份证号">
+                                <button type="button"  id="searchbtn" class="btn btn-default col-md-1 input-sm" style="left: 10px">搜索</button>
+
+                            </div>
+
+
+
+                            <div class="table-responsive">
+                                <table class="table  table-bordered ui-table-box table-edit table-hover" id="adminTable">
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--基本表单结束--->
+
+
+
+
+
+                <!--                这里是页面主体 显示部分 结束-->
+            </div><!---page-body---->
+        </div><!--page-wrapper--->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div th:replace="~{commons/onLoanJs :: js}"></div>
+<!--      客户列表页面js  -->
+<script th:src="@{/resource/js/myJs/adminIndex.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="文倩整理的bootstrap的web模版">
+    <meta name="keywords" content="ztree,参考在Tree网站,http://www.treejs.cn"/>
+    <title>首页</title>
+    <link href="../../images/web.ico" rel="icon">
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../lib/bootstrap/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="../../css/skins.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <!----->
+    <link href="../../plugins/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    <link href=../../css/ztree.css" rel="stylesheet">
+    <style>
+        .ztree li{
+            position: relative;
+            overflow: hidden;
+        }
+        .ztree li .btn-set.btn{
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: url("../images/ztree/arrowD.png") no-repeat ;
+            background-size: cover;
+        }
+        .ztree li a{
+            width: 100%;
+        }
+        .ui-list-group{
+            position: absolute;
+            top: 90px;
+            right: 40px;
+            display: none;
+            width: 130px;
+            z-index: 99999;
+        }
+        .ui-list-group li:hover{
+            background: #f9f9f9;
+            cursor: pointer;
+        }
+    </style>
+    <!---让IE9以下浏览器支持响应式布局---->
+    <!--[if lt IE 9]>
+    <script src="../../plugins/ie/html5shiv-3.7.0.js"></script>
+    <script src="../../plugins/ie/respond-1.3.0.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!--加载--->
+<div class="loading-container">
+    <div class="sk-spinner sk-spinner-wave">
+        <div class="sk-rect1"></div><!--此注释用于删除display: inline-block;布局下浏览器自动生成的空白边距，请勿删除
+            --><div class="sk-rect2"></div><!--
+            --><div class="sk-rect3"></div><!--
+            --><div class="sk-rect4"></div><!--
+            --><div class="sk-rect5"></div>
+    </div>
+</div>
+<!--导航-->
+<div class="navbar navbar-inner">
+    <div class="container-fluid">
+        <div class="">
+            <a class="navbar-header pull-left logo" href="../../index.html">
+                Admin
+            </a>
+            <div class="sidebar-collaps" id="sidebar-collapse" style="display: inline-block">
+                <i class="collapse-icon glyphicon glyphicon-align-justify"></i>
+            </div>
+            <ul class="nav navbar-nav navbar-right navbar-custom-menu">
+                <li class="dropdown">
+                    <a href="#" title="警告"><i class="fa fa-exclamation-triangle"></i></a>
+                </li>
+                <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="邮件"><i class="fa fa-envelope-o"></i><span class="label label-success badge-s">4</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="header">你有4封未读邮件</li>
+                        <li>
+                            <div class="slimScrollDiv">
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#">
+                                            <div class="pull-left"><img src="../images/head-portrait/0.jpg" class="img-circle"></div>
+                                            <h4>五大新型Python框架！<small>两小时前</small></h4>
+                                            <p>更快、更简单，更“Python化”——这就是Python生态系统中各类新型Web框架的终极诉求。在今天的文章中，我们将介绍五款面向Python的新型Web与网络框架，它能够切实提升速度表现、充分发挥突破性新特性，同时带来实现新思路的更多可行途径。</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="pull-left"><img src="../images/head-portrait/4.jpg" class="img-circle"></div>
+                                            <h4>从传统架构到云上数据<small>昨天</small></h4>
+                                            <p>从传统的架构到云上大数据，实现了很多的转变。传统的大数据平台计算和数据一般都在一起，到云上之后计算有可能是虚拟机、有可能是容器，存储和计算是分离的。任何计算节点访问存储时都是通过高速互联网络把数据迁移到本地来。</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="pull-left"><img src="../images/head-portrait/2.jpg" class="img-circle"></div>
+                                            <h4>Windows常见故障<small>昨天</small></h4>
+                                            <p>任何使用Windows系统的用户都碰到过各种各样的问题，其中一些次要的问题不但会引起你的烦恼，还会给你的工作效率带来负面影响。而那些主要的问题则可能会导致你的程序崩溃，且让你需要重新启动系统。</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="pull-left"><img src="../images/head-portrait/3.jpg" class="img-circle"></div>
+                                            <h4>移动应用开发从何入手？<small>昨天</small></h4>
+                                            <p>移动应用的开发方式多种多样。虽然从技术层面了解混合与原生应用间的区别非常重要，但更重要的仍然是立足业务层面思考具体决策会给开发团队及客户带来哪些影响。事实上，混合与原生之争久已有之，且双方在使用体验、技术、投资回报以及业务影响等层面皆各擅胜场。</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="footer"><a href="#">查看所有邮件</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="通知"><i class="fa fa-bell-o"></i><span class="label label-warning badge-s">10</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="header">你有10条新消息</li>
+                        <li>
+                            <div class="slimScrollDiv">
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#">
+                                           <i class="fa fa-user-circle-o text-yellow"></i>管理员发布了新公告
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-user-o text-red"></i>您有3次登录失败的记录
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-user-o text-info"></i>您更换了您的电话号码
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-group text-aqua"></i>新同事向您发出邀请
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-group text-green"></i>有新员工加入
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="footer"><a href="#">查看所有消息</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle animation-info" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="消息"><i class="fa fa-commenting"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="header">有2位联系人给你发来了消息</li>
+                        <li>
+                            <div class="slimScrollDiv">
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#">
+                                            <div class="pull-left"><img src="../images/head-portrait/0.jpg" class="img-circle"></div>
+                                            <p>Divyia</p>
+                                            <h5>在线<small>1小时前</small></h5>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="pull-left"><img src="../images/head-portrait/4.jpg" class="img-circle"></div>
+                                            <p>Johnson</p>
+                                            <h5>在线<small>3小时前</small></h5>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="../images/head-portrait/3.jpg" class="user-img"><span class="hedden-xs"> 欢迎您，<span class="loginUser">WenQian</span></span></a>
+                    <ul class="dropdown-menu user-box">
+                        <li class="user-header">
+                            <img src="../images/head-portrait/3.jpg" class="img-circle" height="90">
+                            <p>WenQian-Web前端开发者<small>2014/04-至今</small></p>
+                        </li>
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a class="btn btn-default" href="introductions.html">简介</a>
+                            </div>
+                            <div class="pull-right">
+                                <a class="btn btn-default btnLogout"  href="login.html">退出</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<!--主体-->
+<div class="main-container container-fluid">
+    <div class="page-container" style="">
+        <div class="page-sidebar">
+            <div class="sidebar-header-wrapper">
+                <div class="form-group has-group has-transparent">
+                    <input type="text" class="form-control searchinput">
+                    <div class="searchhelper">搜索报告、图表、电子邮件或通知</div>
+                    <span class="fa fa-search has-group-feedback"></span>
+                </div>
+            </div>
+            <ul class="nav sidebar-menu">
+                <!--首页-->
+                <li>
+                    <a href="../../index.html">
+                        <i class="glyphicon glyphicon-home menu-icon"></i>
+                        <span class="menu-text"> 首页 </span>
+                    </a>
+                </li>
+                <!--表单-->
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="fa fa-edit menu-icon"></i>
+                        <span class="menu-text"> 表单 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="form-layouts.html">
+                                <span class="menu-text">基本表单</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-edit.html">
+                                <span class="menu-text">可扩展表单</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-validator.html">
+                                <span class="menu-text">表单验证</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-assembly.html">
+                                <span class="menu-text">表单小组件</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--表格-->
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="fa fa-table menu-icon"></i>
+                        <span class="menu-text"> 表 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="table-layouts.html">
+                                <span class="menu-text">简单的表格</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="table-data.html">
+                                <span class="menu-text">数据表格</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="table-bootstrap-inlin-edit.html">
+                                <span class="menu-text">数据表格bootstrap table</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="table-layui.html">
+                                <span class="menu-text">数据表格Layui</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tableNestingLayui.html">
+                                <span class="menu-text">嵌套表格Layui</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--列表-->
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="fa fa-server menu-icon"></i>
+                        <span class="menu-text"> 列表 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="list-menu.html">
+                                <span class="menu-text">基本列表</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--树-->
+                <li class="active open">
+                    <a href="#" class="menu-dropdown">
+                        <i class="fa fa-tree menu-icon"></i>
+                        <span class="menu-text"> 树 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li class="active">
+                            <a href="tree-ztree.html">
+                                <span class="menu-text">ztree</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tree-ztreeTable.html">
+                                <span class="menu-text">表格树</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--图表-->
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="fa fa-bar-chart-o menu-icon"></i>
+                        <span class="menu-text"> 图表 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="chart-basic.html">
+                                <span class="menu-text">chart图表</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="chart-echarts.html">
+                                <span class="menu-text">echarts图表</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--UI元素-->
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="fa fa-laptop menu-icon"></i>
+                        <span class="menu-text"> UI元素 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="ui-fontawesome.html">
+                                <span class="menu-text">图标</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="progress-bar.html">
+                                <span class="menu-text">进度条</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="menu-text">提示</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="right-click-menu.html">
+                                <span class="menu-text">右键菜单</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="menu-text">向导</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--动画-->
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="fa fa-spinner menu-icon"></i>
+                        <span class="menu-text"> 动画 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="animation-basic.html">
+                                <span class="menu-text">动画路径集</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="animation-loop.html">
+                                <span class="menu-text">循环动画</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--异常页-->
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="fa fa-times-circle-o menu-icon"></i>
+                        <span class="menu-text"> 异常页 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="error-404.html">
+                                <span class="menu-text">404</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="error-500.html">
+                                <span class="menu-text">500</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--其他页-->
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="glyphicon glyphicon-link menu-icon"></i>
+                        <span class="menu-text"> 其他 </span>
+                        <i class="fa fa-angle-left menu-expand"></i>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="browse-page.html">
+                                <span class="menu-text">浏览页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="introductions.html">
+                                <span class="menu-text">简介</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="login.html">
+                                <span class="menu-text">登录</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="register.html">
+                                <span class="menu-text">注册</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="retriveve-password.html">
+                                <span class="menu-text">找回密码</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--Widgets-->
+            </ul>
+        </div><!---page-sidebar--->
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="#">树</a></li>
+                    <li>zTree</li>
+                </ol>
+            </div>
+            <div class="page-header position-relative">
+                <div class="header-title title-h1">zTree</div>
+            </div>
+            <div class="page-body">
+
+                <div class="row">
+                    <!--简单树--->
+                    <div class="col-sm-3">
+                        <div class="widget">
+                            <div class="widget-header">
+                                <div class="widget-caption">简单树</div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <input type="text" id="key" value="" class="empty" />
+                                            <button class="btn1">查询</button>
+                                        </div>
+                                        <ul id="treeDemo" class="ztree"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!---page-body---->
+        </div><!--page-wrapper--->
+    </div>
+</div>
+
+<!--回到顶部--->
+<a id="backTop">
+    <i class="fa fa-angle-up"></i>
+</a>
+
+
+<!--设置--->
+<div id="setBox">
+    <div class="set-switcher-heading">
+        设置
+        <div class="set-switcher-heading-icon">
+            <i class="glyphicon glyphicon-asterisk fa-spin"></i>
+        </div>
+    </div>
+    <div class="set-switcher-body">
+        <div class="set-switcher-colors">
+            <div class="set-switcher-title">颜色</div>
+            <a class="style-switcher-color bg-green" data-color="layout-green"></a>
+            <a class="style-switcher-color bg-blue"  data-color="layout-blue"></a>
+            <a class="style-switcher-color bg-orange" data-color="layout-orange"></a>
+            <a class="style-switcher-color bg-mint" data-color="layout-mint"></a>
+            <a class="style-switcher-color bg-salmon" data-color="layout-salmon"></a>
+            <a class="style-switcher-color bg-red" data-color="layout-red"></a>
+            <a class="style-switcher-color bg-yellow" data-color="layout-yellow"></a>
+            <a class="style-switcher-color bg-black" data-color="layout-black"></a>
+        </div>
+        <div class="set-switcher-other">
+            <div class="set-switcher-other-title">建议作者添加其他设置</div>
+            <a class="btn btn-link" href="//shang.qq.com/wpa/qunwpa?idkey=a12c560e0d920f51ab296118afdb5aa67f5abda311eb44c74e10a9880fc8f20c">qq:2234965407</a>
+            <a class="btn btn-link" href="mailto:2234965407@qq.com">邮箱：2234965407@qq.com</a>
+        </div>
+    </div>
+</div>
+
+
+<!--组织树的编辑操作-->
+<ul class="list-group ui-list-group" id="editTreeNode">
+    <li class="list-group-item">添加成员</li>
+    <li class="list-group-item">添加子部门</li>
+    <li class="list-group-item">修改部门名称</li>
+    <li class="list-group-item">删除部门</li>
+</ul>
+
+<script src="../../lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../js/public.js"></script>
+<script src="../../js/util.js"></script>
+<!----->
+<script src="../../plugins/ztree/js/jquery.ztree.core.min.js"></script>
+<script src="../../plugins/ztree/js/jquery.ztree.excheck.min.js"></script>
+<script src="../../plugins/ztree/js/jquery.ztree.exedit.min.js"></script>
+<script src="../../js/searchZtree.js"></script>
+</body>
+</html>

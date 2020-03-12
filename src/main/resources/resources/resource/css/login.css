@@ -1,0 +1,191 @@
+
+body{
+    background-color: #fff;
+    color: #666;
+}
+.panel-login{
+    padding: 0;
+    border-radius: 3px;
+    overflow: hidden;
+    border: none;
+}
+.panel-login .panel-header{
+    padding: 10px 15px;
+    margin: 0;
+}
+.bg-gradient-blue{
+    background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #2f9ee5 0%, #096bb4 100%) repeat scroll 0 0;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr = #2f9ee5, endColorstr = #096bb4);
+    color: #fff;
+}
+.panel-login .panel-body{
+    margin: 0;
+    padding: 0;
+}
+.panel-login .panel-body .row{
+    display: table;
+    width: 100%;
+    margin: 0;
+}
+.panel-login .login-form small{
+    text-align: left;
+}
+.panel-login .panel-body .row .login-form .control-label{
+    padding-right: 0;
+}
+
+.panel-login .login-img{
+    /*padding:  39px 0;*/
+    background-color: #f0f4f6;
+    text-align: center;
+}
+.panel-login .login-img img{
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.panel-login .login-title{
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+@media (min-width: 768px) {
+    .panel-login{
+        margin: 8% auto 2%;
+        width: 80%;
+        max-width: 600px;
+        box-shadow: 0 0 40px #bbb;
+    }
+    .panel-login .login-form {
+        /*padding: 40px 0;*/
+    }
+    .panel-login .login-title {
+         padding-left: 16px;
+    }
+    .icon-left .icon{
+        display: none;
+    }
+    .panel-body{
+        display: table;
+        width: 100%;
+        vertical-align: top;
+    }
+    .panel-body .login-img,
+    .panel-body .login-form{
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .panel-login .panel-body .row .login-img,
+    .panel-login .panel-body .row .login-form{
+        /*padding: 15px 0;*/
+        display: table-cell;
+        height: 100%;
+    }
+    .panel-login .panel-body .row .login-img{
+        width: 220px;
+    }
+    .panel-login .panel-body .row .login-form{
+        padding: 50px 15px 50px 35px;
+        width: calc(100% - 220px);
+        height: 300px;
+    }
+}
+@media (max-width: 768px) {
+    body,
+    .panel-body,
+    .login-form{
+        background-color: #f0f4f6;
+    }
+    .panel-login .login-img{
+        padding-top: 60px ;
+        padding-bottom: 0;
+    }
+    .panel-login .login-img img{
+        height: 80px;
+    }
+    .login-form{
+        padding: 0 15px;
+    }
+
+    .panel-login .login-form{
+        text-align: center;
+    }
+    .panel-login .login-form .login-title{
+        margin-bottom: 60px;
+    }
+    .panel-login .login-form .form-group{
+
+    }
+    .control-label{
+        display: none;
+    }
+    .login-username{
+        position: relative;
+    }
+    .login-username:before{
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
+        border: 1px solid red;
+        z-index: 999;
+    }
+    .btn-login{
+        display: block;
+    }
+    .btn-register{
+
+    }
+    .btn-group-box-xs{
+        margin-top: 10px;
+    }
+    .btn-group-box-xs .btn{
+        position: relative;
+        padding: 0 15px;
+        margin-top: 10px;
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+    }
+    .btn-group-box-xs .btn:last-child:before{
+        display: block;
+        content: " ";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        border-left: 1px solid #aaa;
+    }
+    .btn-group-box-xs .btn-register:hover,
+    .btn-group-box-xs .btn-register:focus{
+        background-color: transparent;
+        outline: none;
+        border-color: transparent;
+        text-decoration: underline;
+    }
+    .input-icon .icon{
+        color: #999;
+    }
+    .icon-left{
+
+    }
+    .icon-left .form-control{
+        padding-left: 31px;
+    }
+    .icon-left .icon{
+      position: absolute;
+        top: 0;
+        left: 15px;
+        height: 34px;
+        width: 34px;
+        line-height: 34px;
+        text-align: center;
+    }
+}
+.btn-form-group{
+    margin-bottom: 0;
+}
+/*测试帐号*/

@@ -1,0 +1,143 @@
+/*
+ return:string
+ 根据链接URL对应的参数名称获取值
+ */
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+
+
+function timestampToTime(timestamp) {
+    timestamp = Number(timestamp);
+    var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    Y = date.getFullYear() + '年';
+    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '月';
+    D = date.getDate() + '日';
+    return Y+M+D;
+}
+
+function timestampToTimeTOd(timestamp) {
+    timestamp = Number(timestamp);
+    var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    Y = date.getFullYear() + '.';
+    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
+    D = date.getDate();
+    return Y+M+D;
+}
+
+function timestampToTimeToAcross(timestamp,type) {
+    timestamp = Number(timestamp);
+    var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    Y = date.getFullYear() + type;
+    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + type;
+    D = date.getDate();
+    return Y+M+D;
+}
+
+/**
+ *
+ * @param fn {Function}   实际要执行的函数
+ * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+ *
+ * @return {Function}     返回一个“去弹跳”了的函数
+ */
+
+function debounce(fn, delay) {
+    var timer = null
+    return function () {
+        var context = this
+        var args = arguments
+        clearTimeout(timer)
+        timer = setTimeout(function () {
+            fn.apply(context, args)
+        }, delay)
+    }
+}
+
+
+
+/**
+ *
+ * @param fn {Function}   实际要执行的函数
+ * @param delay {Number}  执行间隔，单位是毫秒（ms）
+ *
+ * @return {Function}     返回一个“节流”函数
+ */
+
+function throttle(fn, threshhold) {
+    // 记录上次执行的时间
+    var last
+    // 定时器
+    var timer
+    // 默认间隔为 250ms
+    threshhold || (threshhold = 250)
+    // 返回的函数，每过 threshhold 毫秒就执行一次 fn 函数
+    return function () {
+        // 保存函数调用时的上下文和参数，传递给 fn
+        var context = this
+        var args = arguments
+        var now = +new Date()
+        // 如果距离上次执行 fn 函数的时间小于 threshhold，那么就放弃
+        // 执行 fn，并重新计时
+        if (last && now < last + threshhold) {
+            clearTimeout(timer)
+            // 保证在当前时间区间结束后，再执行一次 fn
+            timer = setTimeout(function () {
+                last = now
+                fn.apply(context, args)
+            }, threshhold)
+            // 在时间区间的最开始和到达指定间隔的时候执行一次 fn
+        } else {
+            last = now
+            fn.apply(context, args)
+        }
+    }
+}
+
+
+/*
+var consoleHolder = console;
+function debug(bool){
+    if(!bool){
+        consoleHolder = console;
+        console = {};
+        Object.keys(consoleHolder).forEach(function(key){
+            console[key] = function(){};
+        })
+    }else{
+        console = consoleHolder;
+    }
+}
+debug(false);
+*/
+
+
+
+
+/*actionName:callGroup  //调用原生组合
+var map = {
+    checkNext:{  //检查是否需要做风险测评以及绑卡
+        riskTest:"true/false",
+        bindCard:"true/false"
+    },
+    back:"1/2", //当back为2，回退2级
+    nextUrl:""  //原生操作完要加载的URL
+}*/
+
+
+/*//打开外部链接
+ actionName:openUrl;
+ //参数
+ var map = {
+ url:dataUrl,
+ title:dataTitle
+ }
+ callAppAction({actionName:'openUrl',actionMap:map});
+ */
+
+//177  4866  9859   177  4866  9902    177  4866  9897   177  4866  9975    177  4866  9950   177  4868  0015
+//177  6528  2005   177  6528  2027    177  6528  2095   177  6528  1280    177  6528  1290
+

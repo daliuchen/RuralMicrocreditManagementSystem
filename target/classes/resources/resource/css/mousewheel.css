@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.btn-white{
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 10px 25px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 10px;
+    text-transform:uppercase
+}
+.Htitle1{
+    font-size: 50px;
+}
+.Htitle6{
+    font-size: 14px;
+    font-weight: 700;
+}
+/**/
+.btn-white:hover{
+    background-color: #eee;
+    color: #222;
+}
+body,html{
+    width: 100%;
+    height: 100%;
+    /*overflow: hidden;*/
+}
+.cont-banner{
+    width: 100%;
+    height: 100%;
+    color: #fff;
+}
+.cont-banner.active{
+    display: block;
+}
+.cont{
+    width: 100%;
+    min-height: 400%;
+}
+.ban1{
+    background: url("../images/mousewheel/15.jpg") no-repeat;
+    background-size: cover;
+}
+.ban2{
+    background: url("../images/mousewheel/12.jpg") no-repeat;
+    background-size: cover;
+}
+.ban3{
+    background: url("../images/mousewheel/14.jpg") no-repeat;
+    background-size: cover;
+}
+.ban4{
+    background: url("../images/mousewheel/13.jpg") no-repeat;
+    background-size: cover;
+}
+/**/
+.carousel{
+    position: fixed;
+    top: 40%;
+    right: 20px;
+}
+.carousel li{
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+    margin-bottom: 3px;
+    border-radius: 20px;
+    border: 1px solid #fff;
+    list-style: none;
+    cursor: pointer;
+}
+
+
+.carousel li.active{
+    background-color: transparent;
+}
+.carousel li.active b,
+.carousel li:hover b{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 25px;
+}
+.carousel li:hover b{
+    background-color: #999;
+}
+
+/*向下*/
+.goBottom{
+    width: 55px;
+    height: 55px;
+    margin: 0 auto;
+    /*background:url('../img/goBottom.png') no-repeat;*/
+    background-size: cover;
+    position: absolute;
+    bottom: 10px;
+    left: -25px;
+    margin-left: 50%;
+    z-index: 9999;
+}
+
+.goBottom .glyphicon{
+    line-height: 55px;
+    font-size: 30px;
+    font-weight: 100;
+    color: #fff;
+}
+
+/**/

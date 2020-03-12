@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuchen.bishe.bishe.dao.ConstractMapper">
+    
+   <resultMap id="contractMapping" type="com.liuchen.bishe.bishe.entry.Contract">
+       <id property="id" column="id"/>
+       <result property="no" column="no"/>
+       <result property="detail" column="detail"/>
+       <result property="begin" column="begin"/>
+       <result property="end" column="end"/>
+       <result property="money" column="money"/>
+       <result property="moneyBack" column="moneyBack"/>
+       <result property="status" column="status"/>
+       <result property="contractStatus" column="contractStatus"/>
+       <association property="customer"
+                    column="customerId"
+                    fetchType="eager"
+                    javaType="com.liuchen.bishe.bishe.entry.Customer"
+                    select="com.liuchen.bishe.bishe.dao.CustomerMapper.findCustomerById">
+       </association>
+       <association property="assessingOfficer"
+                    column="assessingOfficerId"
+                    fetchType="eager"
+                    javaType="com.liuchen.bishe.bishe.entry.Customer"
+                    select="com.liuchen.bishe.bishe.dao.CustomerMapper.findCustomerById">
+       </association>
+       <association property="loan"
+                    column="loanId"
+                    fetchType="eager"
+                    javaType="com.liuchen.bishe.bishe.entry.LoanApplication"
+                    select="com.liuchen.bishe.bishe.dao.LoanMapper.getLoanApplicationById">
+       </association>
+
+
+   </resultMap>
+    <sql id="sql">
+            id ,no,detail,begin,end,money,moneyBack,status,
+            contractStatus,
+            customerId,assessingOfficerId,loanId
+    </sql>
+
+
+<!--    List<Contract> listConstractByCustomerIdAndStatus(@Param("customerId") int customerId, @Param("status") String status);-->
+    <select id="listConstractByCustomerIdAndStatus" resultMap="contractMapping" >
+            select
+                <include refid="sql"></include>
+            from  t_contract
+            <where>
+                <if test="customerId != -1">
+                    customerId=#{customerId}
+                </if>
+                <if test="status != null">
+                    status=#{status}
+                </if>
+            </where>
+    </select>
+
+
+<!--    public List<CustomerContractMonthVo> findCustomerConstractWithMonth(@Param("customerId") int customerId,@Param("year") String year,@Param("contractStatus") String contractStatus);-->
+    <select id="findCustomerConstractWithMonth" resultType="com.liuchen.bishe.bishe.vo.CustomerContractMonthVo">
+        select count(begin) as  count ,month(begin)  as month from t_contract
+                                                    where year(begin)=#{year}
+                                                    and contractStatus=#{contractStatus}
+                                                    and customerId=#{customerId}
+                                                    and isDelete = 1
+                                                     group by month(begin)
+    </select>
+
+
+
+
+<!--    public List<Integer> selectConstractMinMaxYear(int customerId);-->
+    <select id="selectConstractMinMaxYear" resultType="java.lang.Integer">
+        select distinct year(begin) from t_contract where  customerId=#{customerId} and isDelete=1
+    </select>
+
+
+
+
+<!--    void updateContract(@Param("no") String no ,@Param("status") String status,@Param("customerId") int customerId);-->
+    <update id="updateContract">
+        update t_contract set status=#{status},
+                           assessingOfficerId = #{customerId}
+                           where no=#{no} and isDelete=1
+    </update>
+
+
+
+
+<!--    Contract getContractByno(String no,String status);-->
+    <select id="getContractByno" resultMap="contractMapping">
+        select
+        <include refid="sql"></include>
+        from  t_contract
+        <where>
+            <if test="no != null">
+                no = #{no}
+            </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

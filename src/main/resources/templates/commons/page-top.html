@@ -1,0 +1,260 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head >
+</head>
+
+<!--加载--->
+<div class="loading-container" th:fragment="common_top_onLoad">
+    <div class="sk-spinner sk-spinner-wave">
+        <div class="sk-rect1"></div><!--此注释用于消除‘display: inline-block;’布局下标签自动生成的空白边距，请勿删除
+            --><div class="sk-rect2"></div><!--
+            --><div class="sk-rect3"></div><!--
+            --><div class="sk-rect4"></div><!--
+            --><div class="sk-rect5"></div>
+
+
+    </div>
+</div>
+
+<!-- 上面的导航栏 -->
+
+    <!--导航-->
+<div class="navbar navbar-inner" th:fragment="common_top">
+        <div class="container-fluid">
+            <div class="">
+                <a class="navbar-header pull-left logo" href="index.html">
+                    农村小额贷款
+                </a>
+
+
+
+                <ul class="nav navbar-nav navbar-right navbar-custom-menu">
+
+
+
+                    <li class="dropdown messages-menu">
+                        <a  class="dropdown-toggle animation-info" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="消息"><i class="fa fa-commenting"></i></a>
+                        <ul class="dropdown-menu">
+
+                            <!--               消息提醒 开始         -->
+                            <li class="header">有2位联系人给你发来了消息</li>
+                            <li>
+                                <div class="slimScrollDiv">
+                                    <ul class="menu">
+                                        <li>
+                                            <a >
+                                                <div class="pull-left"><img th:src="@{/resource/images/head-portrait/0.jpg}" class="img-circle"></div>
+                                                <p>Divyia</p>
+                                                <h5>在线<small>1小时前</small></h5>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a >
+                                                <div class="pull-left"><img th:src="@{/resource/images/head-portrait/4.jpg}" class="img-circle"></div>
+                                                <p>Johnson</p>
+                                                <h5>在线<small>3小时前</small></h5>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!--               消息提醒 结束        -->
+                    <li class="dropdown messages-menu">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img th:src="@{/resource/images/head-portrait/3.jpg}" class="user-img"><span class="hedden-xs"> 欢迎您，<span class="loginUser" th:text="${session.user.name}" ></span></span></a>
+                        <ul class="dropdown-menu user-box">
+                            <li class="user-header">
+
+                                <!--                            个人简介-->
+                                <img th:src="@{/resource/images/head-portrait/3.jpg}" class="img-circle" height="90">
+                                <p>WenQian-Web前端开发者<small>2014/04-至今</small></p>
+
+
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a class="btn btn-default" href="../html/introductions.html">简介</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a class="btn btn-default btnLogout" href="../html/dommouseScroll.html">退出</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+</div>
+
+
+<!-- 侧边栏 -->
+    <div class="page-sidebar" th:fragment="common_side">
+
+    <!--           搜索框 -->
+    <div class="sidebar-header-wrapper">
+        <div class="form-group has-group has-transparent">
+            <input type="text" class="form-control searchinput" disabled >
+            <div class="searchhelper">搜索报告、图表、电子邮件或通知</div>
+            <span class="fa fa-search has-group-feedback"></span>
+        </div>
+    </div>
+
+    <!--          侧边栏  -->
+    <ul class="nav sidebar-menu">
+        <!--首页-->
+        <li class="active">
+            <a href="index.html">
+                <i class="glyphicon glyphicon-home menu-icon"></i>
+                <span class="menu-text"> 首页 </span>
+            </a>
+        </li>
+        <!--客户-->
+        <li>
+            <a th:href="@{/customer}" class="menu-dropdown">
+                <i class="fa fa-edit menu-icon"></i>
+                <span class="menu-text"> 客户管理 </span>
+                <i class="fa fa-angle-left menu-expand"></i>
+            </a>
+        </li>
+        <!--合同-->
+        <li>
+            <a  class="menu-dropdown">
+                <i class="fa fa-table menu-icon"></i>
+                <span class="menu-text">合同管理</span>
+                <i class="fa fa-angle-left menu-expand"></i>
+            </a>
+
+
+            <ul class="submenu">
+                <li>
+                    <a th:href="@{/constractxuqi}">
+                        <span class="menu-text">逾期</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="constract_notDate.html">
+                        <span class="menu-text">未到期合同</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="constract_shixiao.html">
+                        <span class="menu-text">今天到期合同</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="constract_shixiao.html">
+                        <span class="menu-text">过期合同</span>
+                    </a>
+                </li>
+
+
+            </ul>
+
+
+
+        </li>
+
+
+        <!--              贷款管理   -->
+        <li>
+            <a  class="menu-dropdown">
+                <i class="fa fa-tree menu-icon"></i>
+                <span class="menu-text">贷款管理</span>
+                <i class="fa fa-angle-left menu-expand"></i>
+            </a>
+
+            <ul class="submenu">
+                <!--                        <li>-->
+                <!--                            <a href="../html/treeZtree.html">-->
+                <!--                                <span class="menu-text">申请</span>-->
+                <!--                            </a>-->
+                <!--                        </li>-->
+                <li>
+                    <a th:href="@{/shenpi}">
+                        <span class="menu-text">审批</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+        <!--              管理员管理   -->
+        <li>
+            <a th:href="@{/adminIndex}" class="menu-dropdown" style="padding-left:15px">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="menu-text" style="margin-left: 7px">管理员管理</span>
+                <i class="fa fa-angle-left menu-expand"></i>
+            </a>
+
+
+        </li>
+
+
+
+
+
+        <!--      用户界面  开始  -->
+        <!--
+
+
+                        我的业务-->
+        <li>
+            <a  class="menu-dropdown">
+                <i class="fa fa-info-circle menu-icon" aria-hidden="true"></i>
+                <span class="menu-text">我的业务</span>
+                <i class="fa fa-angle-left menu-expand"></i>
+            </a>
+
+
+            <ul class="submenu">
+
+                <li>
+                    <a th:href="@{/MyLoan}">
+                        <span class="menu-text">我的贷款申请</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="customerHetongIndex.html">
+                        <span class="menu-text">我的合同</span>
+                    </a>
+                </li>
+
+            </ul>
+
+
+        </li>
+
+
+
+        <li>
+            <a th:href="@{/loanApplication}" class="menu-dropdown">
+                <i class="fa fa-bed menu-icon" aria-hidden="true"></i>
+                <span class="menu-text">申请贷款</span>
+                <i class="fa fa-angle-left menu-expand"></i>
+            </a>
+
+
+
+        </li>
+
+
+        <!--             用户界面结束   -->
+
+
+
+
+
+        <!--Widgets-->
+    </ul>
+</div><!---page-sidebar--->
+
+
+
+</html>
+
