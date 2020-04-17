@@ -8,13 +8,20 @@ import java.util.List;
 
 public interface CustomerMapper {
 
+        /**
+         * 通过idcard和password获取cusotmer
+         * @param idCard
+         * @param password
+         * @return
+         */
+        int getByIdCardAndPassword(String idCard,String password);
 
 
         public List<Customer> findCustomerByIdCard(@Param("idCard") String idCard,@Param("role") String role);
 
 
 
-        public void addCustomer(@Param("customer") Customer customer);
+        public int addCustomer(@Param("customer") Customer customer);
 
 
 
@@ -40,6 +47,9 @@ public interface CustomerMapper {
          */
         public Customer findCustomerById(int id);
 
+
+
+        int updatePassword(String idCard,String password);
 
 
 

@@ -22,7 +22,7 @@
 
 
 <!--    public void addCustomer(@Param("customer") Customer customer);-->
-    <insert id="addCustomer" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addCustomer" useGeneratedKeys="true" keyProperty="id" parameterType="com.liuchen.bishe.bishe.entry.Customer">
         insert into t_customer(
                 name, idCard, sex, password, phone, email, address, addressDetail, picture, idPicture, isDelete, role
                 )
@@ -62,10 +62,14 @@
 
     </update>
 
+<!--    int updatePassword(String idCard,String password);-->
+    <update id="updatePassword">
+        update  t_customer set password=#{password}
+                           where idCard=#{idCard}
+    </update>
 
 
-
-<!--        public List<Customer> findCustomerByPage(); -->
+    <!--        public List<Customer> findCustomerByPage(); -->
     <select id="findCustomerByPage" resultType="com.liuchen.bishe.bishe.entry.Customer">
         select * from t_customer where isDelete=1 order by id
     </select>
@@ -84,6 +88,11 @@
 
     <select id="findCustomerById" resultType="com.liuchen.bishe.bishe.entry.Customer">
         select  * from t_customer where id = #{id}
+    </select>
+
+<!--    int getByIdCardAndPassword(String idCard,String password);-->
+    <select id="getByIdCardAndPassword" resultType="java.lang.Integer">
+        select count(1) from t_customer where idCard=#{idCard} and password=#{password}
     </select>
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/head :: common_head(~{::title},~{})}">
 
     <title>登陆</title>
@@ -14,7 +14,10 @@
         <div class="row">
             <div class="login-img">
 <!--      这里放登陆用户的照片 ajax          -->
-                <img th:src="@{/resource/images/login-logo.png}">
+                <img id="idPicture" th:src="@{/resource/images/login-logo.png}" style=" border-radius: 50%;
+                                          width: 180px;
+                                          height: 180px;
+                                          ">
             </div>
             <div class="login-form">
                 <h5 class="login-title">欢迎访问，请登陆</h5>
@@ -36,7 +39,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">帐号</label>
                         <div class="col-sm-9 input-icon icon-left">
-                            <input type="text" name="account" class="form-control login-username" placeholder="请输入身份证号"
+                            <input  id="account" type="text" name="account" class="form-control login-username" placeholder="请输入身份证号"
                                    data-bv-message="用户名无效" required
                                    data-bv-notempty-message="用户名是必填的，不能为空"
                                    pattern="[a-zA-Z0-9]+"
@@ -45,7 +48,7 @@
                                    data-bv-stringLength-min="4"
                                    data-bv-stringLength-max="12"
                                    data-bv-stringLength-message="最少4个字符最多选择12个字符"
-                                   value="admin"
+
                             >
                             <i class="fa fa-user icon"></i>
                         </div>
@@ -62,7 +65,6 @@
                                    data-bv-stringLength-min="4"
                                    data-bv-stringLength-max="12"
                                    data-bv-stringLength-message="最少4个字符最多选择12个字符"
-                                   value="admin"
                             >
                             <i class="fa fa-lock icon"></i>
                         </div>
@@ -97,10 +99,14 @@
                             <button class="btn btn-primary btn-login bg-gradient-blue" type="submit">登陆</button>
                             <label class="btn-group-box-xs">
                                 <a class="btn btn-default btn-register" th:href="@{/regiest}">注册</a>
-                                <a class="btn btn-link" th:href="retrivevePassword.html">找回密码</a>
+                                <a class="btn btn-link" th:href="@{/retirvtePassword}">找回密码</a>
                             </label>
                         </div>
                     </div>
+
+<!--                    错误消息显示 -->
+                    <div th:if="${message} != null" th:text="${message}" style="color: red"></div>
+
 
                 </form>
             </div>
@@ -120,7 +126,18 @@
             var time = new Date().getTime();
             $(this).attr("src","/bishe/code?a="+time);
 
-        })
+        });
+
+
+        $("#account").blur(function () {
+            var val = $(this).val();
+            $("#idPicture").attr("src","/bishe/picture/"+val)
+        });
+
+
+
+
+
 
     })
 

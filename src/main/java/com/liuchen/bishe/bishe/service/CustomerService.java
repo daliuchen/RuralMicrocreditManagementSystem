@@ -22,12 +22,14 @@ public interface CustomerService {
 
     /**
      * 添加customer
+     * 设置信用分初始值为500分
      * @param customer
      */
-    public void  addCustomer(Customer customer);
+    public void  addCustomer(Customer customer) throws FindException;
 
     /**
      * 删除cusotmer
+     * 删除信用分
      * @param idCard
      *
      */
@@ -58,6 +60,14 @@ public interface CustomerService {
      */
     public Customer findCustomerByIdCard(String idCard) throws FindException;
 
+
+
+
+    boolean modifyPassword(String idCard,String oldPassword,String newPassword);
+
+
+
+    boolean modifyPassword(String idCard,String password);
 
 
 }

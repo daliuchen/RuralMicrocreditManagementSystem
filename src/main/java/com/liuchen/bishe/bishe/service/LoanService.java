@@ -25,10 +25,9 @@ public interface LoanService {
          * 用户登陆之后 根据id来查找。显示我的贷款
          * * @param offset
          * @param limit
-         * @param customerId
          * @return
          */
-        public PageInfo findMyLoanApplication(int offset, int limit, int customerId) throws FindException;
+        public PageInfo findMyLoanApplication(int offset, int limit,int  id) throws FindException;
 
 
         /**
@@ -60,9 +59,10 @@ public interface LoanService {
 
         /**
          * 贷款申请通过
-         * @param no
+         * @param no                    申请编号
+         * @param  assessOfferId        操作员ID
          */
-        public void agreeloanApplication(String no);
+        public void agreeloanApplication(String no,int assessOfferId) throws FindException;
 
 
 

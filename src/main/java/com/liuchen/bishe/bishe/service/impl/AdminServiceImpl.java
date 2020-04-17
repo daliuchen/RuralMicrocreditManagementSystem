@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.liuchen.bishe.bishe.dao.AddressMapper;
 import com.liuchen.bishe.bishe.dao.CustomerMapper;
+import com.liuchen.bishe.bishe.dao.ScoreMapper;
 import com.liuchen.bishe.bishe.entry.Customer;
 import com.liuchen.bishe.bishe.exception.FindException;
 import com.liuchen.bishe.bishe.myEnum.ExceptionCodeEnum;
@@ -35,12 +36,19 @@ public class AdminServiceImpl implements AdminService {
     private GetAddress getAddress;
 
 
+    @Autowired
+    private ScoreMapper scoreMapper;
 
 
     @Override
     public PageInfo getAllAdmin(int offset, int limit, String idCard) throws FindException {
         Page<Object> page = PageHelper.startPage(offset, limit);
         List<Customer> admins = customerMapper.findCustomerByIdCard(idCard,"admin");
+
+        if(true == admins.isEmpty()){
+            throw  new FindException("管理员index 查找失败 ",ExceptionCodeEnum.EXCEPTION_CODE_ENUM_NOTFIND);
+        }
+
         for (Customer admin :
                 admins) {
             String address = getAddress.getCustomerAddress(admin.getAddress(), admin.getAddressDetail());
@@ -48,9 +56,7 @@ public class AdminServiceImpl implements AdminService {
         }
 
 
-        if(true == admins.isEmpty()){
-            throw  new FindException(ExceptionCodeEnum.EXCEPTION_CODE_ENUM_NOTFIND);
-        }
+
         PageInfo<Customer> pageInfo = new PageInfo<>(admins);
         return  pageInfo;
     }
@@ -67,8 +73,20 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public void addCustomer(Customer customer) {
-        customerMapper.addCustomer(customer);
+    @Transactional(rollbackFor = Exception.class)
+    public void addCustomer(Customer customer) throws FindException {
+         customerMapper.addCustomer(customer);
+
+         //TODO: 获取不了 自增的ID 在xml文件中配置页配置好了，但就是获取不到，解决方法 在查一遍 就OK
+
+
+        List<Customer> customers = customerMapper.findCustomerByIdCard(customer.getIdCard(), null);
+        if(customers.size()!=1){
+            throw new FindException("添加用户出错，",ExceptionCodeEnum.EXCEPTION_CODE_ENUM_FINDMANY);
+        }
+
+        scoreMapper.addScore(500,customers.get(0).getId());
+
     }
 
 

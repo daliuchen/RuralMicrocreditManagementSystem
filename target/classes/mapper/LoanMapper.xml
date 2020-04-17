@@ -56,7 +56,7 @@
 
 <!--    public void upDateStatusByNo(@Param("no") String no,@Param("status") String status);-->
 
-    <update id="upDateStatusByNo" >
+    <update id="upDateStatusByNo" useGeneratedKeys="true" keyProperty="id" >
         update t_loan_application set status=#{status} where no=#{no} and isDelete=1
     </update>
 
@@ -95,7 +95,7 @@
 
 <!--    public void updateLoanApplication(String no,String status);-->
     <update id="updateLoanApplication">
-        update  t_loan_application set status=#{status} where no = #{no};
+        update  t_loan_application set status=#{status} where no = #{no}
     </update>
 
 
@@ -103,9 +103,13 @@
 
 <!--    LoanApplication getLoanApplicationById(int id);-->
     <select id="getLoanApplicationById" resultMap="loanMapper">
-        select * from t_loan_application where id=#{id};
+        select * from t_loan_application where id=#{id}
     </select>
 
+
+    <select id="countLoanApplicationWithStatus" resultType="java.lang.Integer">
+        select count(1) from t_loan_application where status='未处理'
+    </select>
 
 
 </mapper>

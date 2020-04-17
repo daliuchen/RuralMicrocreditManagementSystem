@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/head :: common_head(~{::title},~{})}">
 
 
@@ -26,7 +26,7 @@
         <div class="page-wrapper">
             <div class="page-breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="index.html">首页</a></li>
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
                 </ol>
             </div>
             <div class="page-header position-relative">
@@ -46,18 +46,7 @@
                         </div>
                         <div class="widget-body">
 
-                            <div class="btn-group-tool bootstrap-btn-group-tool row" style="margin-bottom: 10px">
-                                <div class="col-md-3">
-<!--                                    <a href="addCustomer.html" class=""><button class="btn btn-success btn-add-alert">新增</button></a>-->
-
-<!--                                    <button class="btn btn-default btn-del-List-2">批量删除</button>-->
-                                </div>
-
-<!--                                <input type="text" class="col-md-2 col-md-offset-5 ">-->
-<!--                                <button type="button" class="btn btn-default col-md-1 input-sm" style="left: 10px">搜索</button>-->
-
-                            </div>
-
+<!--  这一块是不需要做 模糊查询的-->
 
 
                             <div class="table-responsive">

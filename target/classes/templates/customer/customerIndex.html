@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/head :: common_head(~{::title},~{})}">
     <title>客户管理</title>
 
@@ -22,7 +22,7 @@
         <div class="page-wrapper">
             <div class="page-breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="index.html">首页</a></li>
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
                 </ol>
             </div>
             <div class="page-header position-relative">

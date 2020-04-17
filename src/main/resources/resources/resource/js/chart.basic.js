@@ -48,8 +48,8 @@ chartDataNew.prototype = {
                         data = JSON.parse(data)
                     }
                     if (data.status == 200) {
-                        console.log("请求连接：" + than.opts.url);
-                        console.log("获取到的数据" + JSON.stringify(data));
+
+
                         than.barCharDataLine(data.data);
                     } else {
                         alert(data.msg);
@@ -139,8 +139,8 @@ chartDataNew.prototype = {
                         data = JSON.parse(data)
                     }
                     if (data.status == 200) {
-                        console.log("请求连接：" + than.opts.url);
-                        console.log("获取到的数据" + JSON.stringify(data));
+
+
                         than.barCharDataBar(data.data);
                     } else {
                         alert(data.msg);
@@ -231,8 +231,9 @@ chartDataNew.prototype = {
                     }
                     if (data.status == 200) {
 
-                        console.log("请求连接：" + than.opts.url);
-                        console.log("获取到的数据" + JSON.stringify(data));
+
+
+
                         than.chartRadarDataBar(data.data);
                     } else {
                         alert(data.msg);
@@ -323,8 +324,8 @@ chartDataNew.prototype = {
                     }
                     if (data.status == 200) {
 
-                        console.log("请求连接：" + than.opts.url);
-                        console.log("获取到的数据" + JSON.stringify(data));
+
+
                         than.chartPloarareaDataBar(data.data);
                     } else {
                         alert(data.msg);
@@ -399,8 +400,8 @@ chartDataNew.prototype = {
                     }
                     if (data.status == 200) {
 
-                        console.log("请求连接：" + than.opts.url);
-                        console.log("获取到的数据" + JSON.stringify(data));
+
+
                         than.chartPieDataBar(data.data);
                     } else {
                         alert(data.msg);
@@ -473,8 +474,8 @@ chartDataNew.prototype = {
                     }
                     if (data.status == 200) {
 
-                        console.log("请求连接：" + than.opts.url);
-                        console.log("获取到的数据" + JSON.stringify(data));
+
+
                         than.chartDoughnutDataBar(data.data);
                     } else {
                         alert(data.msg);

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/head :: common_head(~{::title},~{})}">
+    <title>关于我</title>
+</head>
+<body>
+
+
+<!--加载-->
+<div th:replace="~{commons/page-top :: common_top_onLoad}"></div>
+
+
+<!--  插入导航 -->
+<div th:replace="~{commons/page-top :: common_top}"></div>
+
+<!--主体-->
+<div class="main-container container-fluid">
+    <div class="page-container" style="">
+        <!--       公共片段的引入-->
+        <div th:replace="~{commons/page-top :: common_side}"></div>
+
+        <div class="page-wrapper">
+
+
+            <div class="page-breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="#">其他</a></li>
+                    <li>简介</li>
+                </ol>
+            </div>
+
+
+            <div class="page-header position-relative">
+                <div class="header-title title-h1">简介</div>
+            </div>
+
+            <div class="page-body">
+                <div class="profile-container">
+                    <div class="row profile-header">
+                        <div class="col-md-3" style="width: 100px;width: 100px">
+<!--                            获取头像 -->
+                            <img th:src="@{/picture/{type}(type=${session.user.idCard})}"  style="width: 100%;height: 100%">
+                        </div>
+
+                        <div class="con-md-5  profile-info">
+                            <div class="header-fullname" th:text="${session.user.name}"></div>
+
+                            <div class="header-information">
+                                账号(身份ID)：<p th:text="${session.user.idCard}"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="profile-body">
+
+
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs nav-flat" role="tablist">
+
+                                <li role="presentation" class="active">
+                                    <a href="#profile" id="profile-tab" role="tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">简介</a>
+                                </li>
+
+                            </ul>
+
+
+                            <div class="tab-content tab-flat">
+                                <div role="tabpanel" class="tab-pane fade in active" id="profile" aria-labelledby="profile-tab">
+                                    <form>
+
+                                        <div class="form-title">密码</div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                     <span class="input-icon icon-left">
+                                                         <input id="oldPassword" type="text" class="form-control" placeholder="请输入旧密码">
+                                                         <i class="fa fa-taxi icon text-blue "></i>
+                                                     </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                     <span class="input-icon icon-left">
+                                                         <input id="newPassword" type="text" class="form-control" placeholder="请输入新密码">
+                                                         <i class="fa fa-street-view icon text-blue " ></i>
+                                                     </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <button type="button" class="btn btn-success" id="saveBtn" disabled="disabled">保存</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!---page-body---->
+        </div><!--page-wrapper--->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div th:replace="~{commons/onLoanJs :: js}"></div>
+<script th:src="@{/resource/js/myJs/aboutMe.js}"></script>
+
+
+</body>
+</html>

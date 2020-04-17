@@ -8,6 +8,7 @@ import com.liuchen.bishe.bishe.myEnum.ExceptionCodeEnum;
 import com.liuchen.bishe.bishe.myEnum.LoanStatusEnum;
 import com.liuchen.bishe.bishe.service.LoanService;
 import com.liuchen.bishe.bishe.vo.ReturnT;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.List;
  * @create: 2020-02-16 21:05
  **/
 @Controller
+@Slf4j
 @RequestMapping("/loan")
 public class LoanApplicationController {
 
@@ -45,15 +47,21 @@ public class LoanApplicationController {
     }
 
 
-
-
-    //我的贷款
+    /**
+     * 查询这个人所有的贷款申请
+     * @param limit
+     * @param offset
+     * @param session
+     * @return
+     * @throws FindException
+     */
     @GetMapping("/myLoan")
     @ResponseBody
     public ReturnT getMyLoan(int limit,int offset,HttpSession session) throws FindException {
         Customer customer = (Customer) session.getAttribute("user");
-        PageInfo pageInfo = loanService.findMyLoanApplication(offset, limit, 7);
+        PageInfo pageInfo = loanService.findMyLoanApplication(offset, limit, customer.getId());
         return  new ReturnT(pageInfo);
+
     }
 
 
@@ -75,7 +83,9 @@ public class LoanApplicationController {
     @GetMapping("/shenpiList")
     @ResponseBody
     public ReturnT shenPi(int offset,int limit,String idCard ) throws FindException {
+        log.info("------> 审批  url:loan/shenpiList     ");
         PageInfo pageInfo = loanService.findLoanApplicationByStatus(offset, limit, idCard, LoanStatusEnum.LOAN_STATUS_ENUM_WEI_CHU_LI);
+
         return new ReturnT(pageInfo);
     }
 
@@ -85,6 +95,7 @@ public class LoanApplicationController {
     //审批 》 查看贷款申请
     @GetMapping("/loanInfo/{no}")
     public ModelAndView infoLoan(@PathVariable("no") String no,ModelAndView modelAndView) throws FindException {
+        log.info("-----> 审批/查看贷款申请  url：loanInfo/{}",no);
         List<LoanApplication> loans = loanService.findLoanByNoAndStatus(no.trim(), LoanStatusEnum.LOAN_STATUS_ENUM_WEI_CHU_LI);
         if(loans.size() > 1){
             throw new FindException(ExceptionCodeEnum.EXCEPTION_CODE_ENUM_NOTFIND);
@@ -99,8 +110,8 @@ public class LoanApplicationController {
 
     @GetMapping("/agree")
     @ResponseBody
-    public ReturnT agreeLoanApplication(String no){
-        loanService.agreeloanApplication(no);
+    public ReturnT agreeLoanApplication(String no,@SessionAttribute("user") Customer customer) throws FindException {
+        loanService.agreeloanApplication(no,customer.getId());
         return ReturnT.SUCCESS;
     }
 

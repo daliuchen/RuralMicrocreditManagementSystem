@@ -12,7 +12,7 @@ $(function () {
             alert("请输入")
             return;
         }
-        $("#customerTable").bootstrapTable("refresh",{query: {idCard:idCard}});
+        $("#tableConstract").bootstrapTable("refresh",{query: {idCard:idCard}});
     });
 
 
@@ -38,13 +38,13 @@ $(function () {
         },
         responseHandler:function(res){
             if (res.code == 200){
-                console.log(res);
+                console.log("success "+ res);
 
                 //成功获取
                 var constracts = res.content.list;
                 var tableObj = [];//定义表格对象
-                if(customers.length > 0){
-                    for (var i = 0; i < customers.length; i++) {
+                if(constracts.length > 0){
+                    for (var i = 0; i < constracts.length; i++) {
                         //定义一个行对象
                         var rowObj = {
                             'name':'',
@@ -55,8 +55,8 @@ $(function () {
                             'overdue':''
                         };
                         //赋值
-                        rowObj.name = constracts[i].name;
-                        rowObj.idCard = constracts[i].idCard;
+                        rowObj.name = constracts[i].customer.name;
+                        rowObj.idCard = constracts[i].customer.idCard;
                         rowObj.no = constracts[i].no;
                         rowObj.begin = constracts[i].begin;
                         rowObj.end = constracts[i].end;
@@ -70,6 +70,13 @@ $(function () {
                     rows:tableObj
                 }
 
+                return data;
+            }
+            if(res.code == 500){
+                var data = {
+                    total:0,
+                    rows:null
+                }
                 return data;
             }
         },

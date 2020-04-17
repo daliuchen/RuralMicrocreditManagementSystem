@@ -19,15 +19,25 @@ public class CommonsConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/toLogin").setViewName("login");
         registry.addViewController("/regiest").setViewName("regiest");
 
+        //首页
+        registry.addViewController("/index").setViewName("index");
+
         //客户
-        registry.addViewController("/customer").setViewName("customer/customerIndex.html");
-        registry.addViewController("/addCustomer").setViewName("customer/addCustomer.html");
+        registry.addViewController("/customer").setViewName("customer/customerIndex");
+        registry.addViewController("/addCustomer").setViewName("customer/addCustomer");
 
         //逾期合同列表
         registry.addViewController("/constractxuqi").setViewName("constract/constractInde_xuqi");
+        //未到期合同
+        registry.addViewController("/constractnoDate").setViewName("constract/constractInde_noDate");
+        // 今天到期
+        registry.addViewController("/constractnoToday").setViewName("constract/constractInde_today");
+        //失效合同
+        registry.addViewController("/constractnoshixiao").setViewName("constract/constractInde_shixiao");
 
 
 
+        //申请贷款
         registry.addViewController("/loanApplication").setViewName("loanApplication/customerContractApplication");
 
         //我的贷款申请
@@ -45,6 +55,12 @@ public class CommonsConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/addAdmin").setViewName("admin/addAdmin");
 
 
+
+        //简介
+        registry.addViewController("/aboutMe").setViewName("admin/aboutMe");
+
+        //找回密码
+        registry.addViewController("/retirvtePassword").setViewName("retrivevePassword");
 
     }
 }

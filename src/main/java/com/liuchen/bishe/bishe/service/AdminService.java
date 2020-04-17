@@ -26,7 +26,7 @@ public interface AdminService {
      * 添加admin
      * @param customer
      */
-    public void addCustomer(Customer customer);
+    public void addCustomer(Customer customer) throws FindException;
 
 
     /**

@@ -76,4 +76,7 @@ public interface QuartzService {
      */
     void shutdownAllJobs();
 
+
+    void quertzSayHello();
+
 }

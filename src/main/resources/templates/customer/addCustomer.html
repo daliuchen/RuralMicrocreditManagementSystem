@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/head :: common_head(~{::title},~{})}">
     <title>添加客户</title>
 </head>
@@ -22,7 +22,7 @@
         <div class="page-wrapper">
             <div class="page-breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="index.html">首页</a></li>
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
                 </ol>
             </div>
             <div class="page-header position-relative">
@@ -55,7 +55,12 @@
                                                     <p class="col-sm-12 form-upload-title">二寸免冠照片，最大500KB</p>
                                                 </div>
                                             </div>
+
+<!--                                            用来区分 是添加用户页面还是注册页面-->
                                             <input type="hidden" name="addCustomer" value="1">
+
+
+
                                             <div class="col-sm-8 pull-left-lg">
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label">姓名</label>

@@ -2,6 +2,7 @@ package com.liuchen.bishe.bishe.controller;
 
 import com.github.pagehelper.PageInfo;
 
+import com.liuchen.bishe.bishe.dao.CustomerMapper;
 import com.liuchen.bishe.bishe.entry.Customer;
 import com.liuchen.bishe.bishe.exception.AdminException;
 import com.liuchen.bishe.bishe.exception.FindException;
@@ -11,12 +12,14 @@ import com.liuchen.bishe.bishe.myEnum.RoleEnum;
 import com.liuchen.bishe.bishe.service.CustomerService;
 import com.liuchen.bishe.bishe.util.AddressUtil;
 import com.liuchen.bishe.bishe.vo.ReturnT;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
@@ -32,42 +35,91 @@ import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
     @Autowired
     private CustomerService customerService;
 
 
+    /**
+     * 登录
+     * @param attributes
+     * @param account
+     * @param password
+     * @param code
+     * @param session
+     * @return
+     * @throws FindException
+     */
     @PostMapping("/login")
-    public String doLogin(@NotNull String account, @NotNull String password, @NotNull String code, HttpSession session) throws FindException {
+    public ModelAndView doLogin(RedirectAttributes attributes, @NotNull String account, @NotNull String password, @NotNull String code, HttpSession session) throws FindException {
+        ModelAndView modelAndView = new ModelAndView();
+
+        String role = null;
         String code1 = (String) session.getAttribute("code");
         Customer customer = null;
         if (false == code1.equals(code)) {
             //抛出异常
+            modelAndView.setViewName("redirect:/toLogin");
+            attributes.addFlashAttribute("message","验证码错误");
+            log.info("----> 验证码错误:错误验证码:{},系统验证码:{} ",code,code1);
+            return modelAndView;
         }
 
 
         try {
             customer = customerService.validateCustomer(account, password);
             //说明是普通用户
+            role="0";
 
         } catch (AdminException e) {
             //说明登陆的用户的管理员
+            role="-1";
+            customer = e.getCustomer();
+
 
         } catch (SuperAdminException e) {
             //说明登陆的用户是超级管理  超级管理元可以添加管理员
+            role="1";
+            customer = e.getCustomer();
         }
+
         if (customer == null) {
             //抛出异常
             //密码或者账号错误
-            throw new FindException(ExceptionCodeEnum.EXCEPTION_CODE_ENUM_NOTFIND);
+            modelAndView.setViewName("redirect:/toLogin");
+            attributes.addFlashAttribute("message","密码或者用户错误");//spring mvc 自己带的，之前的redirect会将参数放到url中（get），这个是放在session里面，页面跳转之后就直接活期
+            log.debug("用户名或者密码错误");
+            return  modelAndView;
         }
 
         session.setAttribute("user", customer);
+        session.setAttribute("role",role);
 
-        return "index";
+        //如果是customer直接到我的业务里面我的贷款申请
+        if("0".equals(role)){
+            modelAndView.setViewName("redirect:/MyLoan");
+            return modelAndView;
+        }
+
+        modelAndView.setViewName("index");
+        log.info(" 姓名:{} , role:{} , 登录成功",account,customer.getRole());
+        return modelAndView;
     }
 
+    /**
+     *  TODO:测试留意，新添了 添加时候身份判断，信用分的初始化，删除客户同时页要删除信用风
+     * 添加用户，和注册用户同一个url
+     * @param customer  客户
+     * @param picture   头像
+     * @param idCardPicture 身份证号
+     * @param address1  地址 省
+     * @param address2  地址 市
+     * @param address3  地址 县
+     * @param addCustomer   用来区分是添加用户还是注册  1 是添加 -1是注册
+     * @return  页面
+     */
     @RequestMapping("/add")
     public String doRegiest(Customer customer,
                             @RequestParam("picture1") MultipartFile picture,
@@ -75,8 +127,10 @@ public class UserController {
                             @RequestParam("address1") String address1,
                             @RequestParam("address2") String address2,
                             @RequestParam("address3") String address3,
-                            @RequestParam("addCustomer") String addCustomer
-    ) {
+                            @RequestParam("addCustomer") String addCustomer,
+                            HttpSession session
+
+    ) throws FindException {
 
 
         String address = AddressUtil.spellingAddress(address1, address2, address3);
@@ -87,7 +141,24 @@ public class UserController {
             customer.setIdPicture(idCardPicture.getBytes());
             String password = DigestUtils.md5DigestAsHex(customer.getPassword().getBytes());
             customer.setPassword(password);
-            customer.setRole("admin");
+
+
+            //得到session里面的role 设置角色
+            String role = (String)session.getAttribute("role");
+            if(role == null || "0".equals(role)){
+                //注册页面 或者普通用户
+                customer.setRole("customer");
+            }else{
+                if("1".equals(role)){
+                    //超级管理员
+                    customer.setRole("admin");
+                }
+                if("-1".equals(role)){
+                    //普通管理员
+                    customer.setRole("customer");
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,6 +174,14 @@ public class UserController {
     }
 
 
+    /**
+     * user index
+     * @param offset
+     * @param limit
+     * @param text
+     * @return
+     * @throws FindException
+     */
     @RequestMapping("/index")
     @ResponseBody
     public ReturnT findAllCusomterByPage(int offset, int limit, String text) throws FindException {
@@ -199,6 +278,61 @@ public class UserController {
         model.addObject("customer", customer);
         return model;
     }
+
+
+    @GetMapping("/logout")
+    @ResponseBody
+    public ReturnT logout(HttpSession session){
+        //清除session
+        log.info("----> 用户 成功退出");
+        session.invalidate();
+
+        return ReturnT.SUCCESS;
+    }
+
+
+
+    //修改密码
+    @PostMapping("/modifyPassword")
+    @ResponseBody
+    public ReturnT modifyPassword(String oldPassword,String newPassword,@SessionAttribute("user") Customer customer){
+        if(oldPassword.equals(newPassword) == false){
+            //不相等
+            return  new ReturnT(300,"两次输入的密码不一样");
+        }else{
+            boolean b = customerService.modifyPassword(customer.getIdCard(), oldPassword.trim(), newPassword.trim());
+            if(b == false){
+                return  new ReturnT(301,"原密码错误");
+            }else {
+                return ReturnT.SUCCESS;
+            }
+        }
+
+
+    }
+
+
+
+    //找回密码
+    @PostMapping("/retriveve")
+    @ResponseBody
+    public ReturnT retrivevePassword(String idCard,String rcode,String password1,@SessionAttribute("rcode") String code){
+        log.info("retriveve,参数：idCard:{},rcode:{},password1:{},code:{}",idCard,rcode,password1,code);
+            if(code.equals(rcode) == false){
+                log.info("验证码不想等");
+                return ReturnT.FAIL;
+            }
+        boolean b = customerService.modifyPassword(idCard.trim(), password1.trim());
+            if(b == false){
+                log.info("修改失败");
+                return ReturnT.FAIL;
+            }else{
+                log.info("修改成功");
+                return ReturnT.SUCCESS;
+            }
+    }
+
+
 
 
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <base th:href="${#request.getContextPath()}+'/'">
@@ -60,7 +60,10 @@
                             <p class="col-sm-12 form-upload-title">二寸免冠照片，最大500KB</p>
                         </div>
                     </div>
+<!--                   用来区分是添加页面还是注册页面 -->
                     <input name="addCustomer" value="-1" type="hidden"/>
+
+
                     <div class="col-sm-8 pull-left-lg">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">姓名</label>

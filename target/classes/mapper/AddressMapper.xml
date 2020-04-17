@@ -24,4 +24,18 @@
     </select>
 
 
+
+<!--    <insert id="test" useGeneratedKeys="true" keyProperty="id">-->
+<!--        insert into t_a (a,b,c)-->
+<!--               values-->
+<!--                <foreach collection="testCoolection" item="item"  separator="," index="index">-->
+<!--                (-->
+<!--                    #{item.a},-->
+<!--                    #{item.b},-->
+<!--                    #{item.c},-->
+<!--                )-->
+<!--                </foreach>-->
+<!--    </insert>-->
+
+
 </mapper>

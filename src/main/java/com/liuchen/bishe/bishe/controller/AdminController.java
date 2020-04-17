@@ -6,6 +6,7 @@ import com.liuchen.bishe.bishe.exception.FindException;
 import com.liuchen.bishe.bishe.service.AdminService;
 import com.liuchen.bishe.bishe.util.AddressUtil;
 import com.liuchen.bishe.bishe.vo.ReturnT;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
@@ -29,6 +30,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
+@Slf4j
 public class AdminController {
 
     @Autowired
@@ -38,7 +40,7 @@ public class AdminController {
     @ResponseBody
     public ReturnT getAllAdmin(int offset,int limit,String idCard) throws FindException {
 
-        System.out.println("AdminController.getAllAdmin"+idCard+":"+offset+";"+limit);
+        log.info("----> AdminController.getAllAdmin"+idCard+":"+offset+";"+limit);
         PageInfo pageInfo = null;
         if("".equals(idCard)){
             //分页查找
@@ -80,7 +82,7 @@ public class AdminController {
                             @RequestParam("address1") String address1,
                             @RequestParam("address2") String address2,
                             @RequestParam("address3") String address3
-    ){
+    ) throws FindException {
 
 
 

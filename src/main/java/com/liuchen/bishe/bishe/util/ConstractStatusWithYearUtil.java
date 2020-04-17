@@ -19,7 +19,7 @@ public class ConstractStatusWithYearUtil {
 
 
     public static List invoke(List<CustomerContractMonthVo>  list){
-        //TODO 判断查找的贷款的月份 是否齐全。 问题：怎么判断？如果是2，3，4 怎么找出剩下的没有的。如果是2。5。7，怎么找出
+
         /*
         想法：
             1:用标记位置，一个月份对应一个标记为，挨个判断。

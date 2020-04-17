@@ -11,7 +11,7 @@ $(function () {
         striped : true, //是否显示行间隔色
         pageNumber : 1, //初始化加载第一页
         pagination : true,//是否分页
-        showRefresh:true,//显示刷新按钮
+        showRefresh : true, //显示刷新
         sidePagination : 'server',//server:服务器端分页|client：前端分页
         pageSize : 5,//单页记录数
         pageList : [ 5, 10, 15],//可选择单页记录数
@@ -19,12 +19,13 @@ $(function () {
             var temp = {
                 limit : params.limit, // 每页显示数量
                 offset : params.offset, // SQL语句起始索引
-                idCard:""//用于搜索框
+                idCard:"-1"//用于搜索框
             };
             return temp;
         },
         responseHandler:function(res){
             if (res.code == 200){
+                console.log("贷款申请 审批")
                 console.log(res);
                 //成功获取
                 var loan = res.content.list;
@@ -61,6 +62,13 @@ $(function () {
                 }
 
                 return data;
+            }
+            if (res.code == 500){
+                var data={
+                    total:0,
+                    rows:null
+                };
+                return  data;
             }
         },
         columns:[

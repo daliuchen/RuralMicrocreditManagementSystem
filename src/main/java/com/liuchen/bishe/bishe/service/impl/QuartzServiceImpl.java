@@ -220,7 +220,10 @@ public class QuartzServiceImpl implements QuartzService {
 
     }
 
-
+    @Override
+    public void quertzSayHello() {
+        System.out.println("QuartzServiceImpl.quertzSayHello");
+    }
 
 
 }

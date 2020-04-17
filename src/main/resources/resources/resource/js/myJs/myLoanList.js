@@ -5,19 +5,23 @@
 $(function () {
 
 
+
+
     $('#tableList').bootstrapTable({
         method : 'GET',
         url : "loan/myLoan",//请求路径
         striped : true, //是否显示行间隔色
         pageNumber : 1, //初始化加载第一页
         pagination : true,//是否分页
+        showRefresh:true,//显示刷新按钮
         sidePagination : 'server',//server:服务器端分页|client：前端分页
         pageSize : 5,//单页记录数
         pageList : [ 5, 10, 15],//可选择单页记录数
         queryParams : function (params) {
             var temp = {
                 limit : params.limit, // 每页显示数量
-                offset : params.offset // SQL语句起始索引
+                offset : params.offset, // SQL语句起始索引
+                no:"-1" // 这个参数是给搜索框给的
             };
             return temp;
         },
@@ -53,6 +57,14 @@ $(function () {
                 var data = {
                     total:res.content.total,
                     rows:tableObj
+                }
+
+                return data;
+            }
+            if(res.code==500){
+                var data = {
+                    total:0,
+                    rows:null
                 }
 
                 return data;

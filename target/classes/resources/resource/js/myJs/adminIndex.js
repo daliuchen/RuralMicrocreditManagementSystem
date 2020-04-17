@@ -28,7 +28,7 @@ $(function () {
             return temp;
         },
         responseHandler:function(res){
-            console.log(res)
+
             if (res.code == 200){
                 //成功获取
                 $("#searchCustomerInput").val("");//将搜索框里面清空
@@ -61,6 +61,14 @@ $(function () {
                 var data = {
                     total:res.content.total,
                     rows:tableObj
+                }
+
+                return data;
+            }
+            if(res.code == 500){
+                var data = {
+                    total:0,
+                    rows:null
                 }
 
                 return data;

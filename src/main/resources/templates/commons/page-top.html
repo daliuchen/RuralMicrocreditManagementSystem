@@ -22,7 +22,7 @@
 <div class="navbar navbar-inner" th:fragment="common_top">
         <div class="container-fluid">
             <div class="">
-                <a class="navbar-header pull-left logo" href="index.html">
+                <a class="navbar-header pull-left logo" th:href="@{/index}">
                     农村小额贷款
                 </a>
 
@@ -32,53 +32,30 @@
 
 
 
-                    <li class="dropdown messages-menu">
-                        <a  class="dropdown-toggle animation-info" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="消息"><i class="fa fa-commenting"></i></a>
-                        <ul class="dropdown-menu">
 
-                            <!--               消息提醒 开始         -->
-                            <li class="header">有2位联系人给你发来了消息</li>
-                            <li>
-                                <div class="slimScrollDiv">
-                                    <ul class="menu">
-                                        <li>
-                                            <a >
-                                                <div class="pull-left"><img th:src="@{/resource/images/head-portrait/0.jpg}" class="img-circle"></div>
-                                                <p>Divyia</p>
-                                                <h5>在线<small>1小时前</small></h5>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a >
-                                                <div class="pull-left"><img th:src="@{/resource/images/head-portrait/4.jpg}" class="img-circle"></div>
-                                                <p>Johnson</p>
-                                                <h5>在线<small>3小时前</small></h5>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
 
                     <!--               消息提醒 结束        -->
                     <li class="dropdown messages-menu">
-                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img th:src="@{/resource/images/head-portrait/3.jpg}" class="user-img"><span class="hedden-xs"> 欢迎您，<span class="loginUser" th:text="${session.user.name}" ></span></span></a>
+                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img  th:src="@{/picture/{type}(type=${session.user.idCard})}"  style='height: 40px' class="user-img" > <span class="hedden-xs"> 欢迎您，<span class="loginUser" th:text="${session.user.name}" ></span></span></a>
                         <ul class="dropdown-menu user-box">
                             <li class="user-header">
 
                                 <!--                            个人简介-->
-                                <img th:src="@{/resource/images/head-portrait/3.jpg}" class="img-circle" height="90">
-                                <p>WenQian-Web前端开发者<small>2014/04-至今</small></p>
+                                <img th:src="@{/picture/{idcard} (idcard=${session.user.idCard})}" class="img-circle" height="90">
+<!--                               页面显示 用户名 和 角色 -->
+                                <p th:text="${session.user.name}"></p>
+                                <small th:text="${session.user.role}"></small>
 
 
                             </li>
                             <li class="user-footer">
+
                                 <div class="pull-left">
-                                    <a class="btn btn-default" href="../html/introductions.html">简介</a>
+                                    <a class="btn btn-default" th:href="@{/aboutMe}">简介</a>
                                 </div>
+
                                 <div class="pull-right">
-                                    <a class="btn btn-default btnLogout" href="../html/dommouseScroll.html">退出</a>
+                                    <a class="btn btn-default btnLogout" id="logout">退出</a>
                                 </div>
                             </li>
                         </ul>
@@ -92,26 +69,18 @@
 <!-- 侧边栏 -->
     <div class="page-sidebar" th:fragment="common_side">
 
-    <!--           搜索框 -->
-    <div class="sidebar-header-wrapper">
-        <div class="form-group has-group has-transparent">
-            <input type="text" class="form-control searchinput" disabled >
-            <div class="searchhelper">搜索报告、图表、电子邮件或通知</div>
-            <span class="fa fa-search has-group-feedback"></span>
-        </div>
-    </div>
 
     <!--          侧边栏  -->
     <ul class="nav sidebar-menu">
         <!--首页-->
         <li class="active">
-            <a href="index.html">
+            <a th:href="@{/index}" th:if="${session.role} !='0' ">
                 <i class="glyphicon glyphicon-home menu-icon"></i>
                 <span class="menu-text"> 首页 </span>
             </a>
         </li>
         <!--客户-->
-        <li>
+        <li th:if="${session.role} != '0' ">
             <a th:href="@{/customer}" class="menu-dropdown">
                 <i class="fa fa-edit menu-icon"></i>
                 <span class="menu-text"> 客户管理 </span>
@@ -119,7 +88,7 @@
             </a>
         </li>
         <!--合同-->
-        <li>
+        <li th:if="${session.role} != '0' ">
             <a  class="menu-dropdown">
                 <i class="fa fa-table menu-icon"></i>
                 <span class="menu-text">合同管理</span>
@@ -134,19 +103,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="constract_notDate.html">
+                    <a th:href="@{/constractnoDate}">
                         <span class="menu-text">未到期合同</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="constract_shixiao.html">
+                    <a th:href="@{/constractnoToday}">
                         <span class="menu-text">今天到期合同</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="constract_shixiao.html">
+                    <a th:href="@{/constractnoshixiao}">
                         <span class="menu-text">过期合同</span>
                     </a>
                 </li>
@@ -160,7 +129,7 @@
 
 
         <!--              贷款管理   -->
-        <li>
+        <li th:if="${session.role} != '0' ">
             <a  class="menu-dropdown">
                 <i class="fa fa-tree menu-icon"></i>
                 <span class="menu-text">贷款管理</span>
@@ -184,7 +153,7 @@
 
 
         <!--              管理员管理   -->
-        <li>
+        <li th:if="${session.role} == '1'">
             <a th:href="@{/adminIndex}" class="menu-dropdown" style="padding-left:15px">
                 <i class="glyphicon glyphicon-user"></i>
                 <span class="menu-text" style="margin-left: 7px">管理员管理</span>
@@ -203,7 +172,7 @@
 
 
                         我的业务-->
-        <li>
+        <li th:if="${session.role} == '0' ">
             <a  class="menu-dropdown">
                 <i class="fa fa-info-circle menu-icon" aria-hidden="true"></i>
                 <span class="menu-text">我的业务</span>
@@ -232,7 +201,7 @@
 
 
 
-        <li>
+        <li th:if="${session.role} == '0' ">
             <a th:href="@{/loanApplication}" class="menu-dropdown">
                 <i class="fa fa-bed menu-icon" aria-hidden="true"></i>
                 <span class="menu-text">申请贷款</span>

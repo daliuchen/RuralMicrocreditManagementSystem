@@ -17,6 +17,7 @@ $(function () {
         pagination : true,//是否分页
         sidePagination : 'server',//server:服务器端分页|client：前端分页
         pageSize : 5,//单页记录数
+        showRefresh: true,//是否显示刷新
         pageList : [ 5, 10, 15],//可选择单页记录数
         queryParams : function (params) {
             var temp = {
@@ -51,11 +52,18 @@ $(function () {
                         rowObj.picture = customers[i].picture;
                         tableObj.push(rowObj)
                     }
-                    console.log(tableObj);
                 }
                 var data = {
                     total:res.content.total,
                     rows:tableObj
+                }
+
+                return data;
+            }
+            if (res.code == 500){
+                var data = {
+                    total:0,
+                    rows:null
                 }
 
                 return data;

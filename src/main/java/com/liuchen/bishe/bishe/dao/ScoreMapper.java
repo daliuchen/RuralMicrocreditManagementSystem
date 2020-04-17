@@ -2,20 +2,22 @@ package com.liuchen.bishe.bishe.dao;
 
 import com.liuchen.bishe.bishe.entry.Score;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+
 
 public interface ScoreMapper {
     /**
      * 通过id查找 customer
      * @return
      */
-    public Score findCustomerScoreById(int  id);
+    public Score findCustomerScoreByCustomerId(int  id);
 
     /**
      * 更新score
      * @param newScore
      * @param id
      */
-    public void updateCustomerByIdCard(@Param("newScore") int newScore,@Param("id") int id);
+    public void updateCustomerByCustomerId(@Param("newScore") int newScore,@Param("id") int id);
 
     /**
      * 添加 通过id

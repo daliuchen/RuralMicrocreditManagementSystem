@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/head :: common_head(~{::title},~{})}">
     <title>贷款详细</title>
 </head>
@@ -20,7 +20,7 @@
         <div class="page-wrapper">
             <div class="page-breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="index.html">首页</a></li>
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
                 </ol>
             </div>
             <div class="page-header position-relative">
@@ -88,10 +88,22 @@
 
 
                                     <div class="row row-margin-top" style="margin-top: 30px">
-                                        <label class="col-md-3">担保人信用分:</label>
-                                        <div class="col-md-7" style="height: 270px;left: -60px;top: 60px" id="loadCustomerCred">
-                                            <!--   折线图表示用户信用分的变化情况 -->
-                                        </div>
+                                      <div class="col-md-12">
+
+                                          <div class="row">
+                                              <label class="col-md-3">用户信用分:</label>
+                                              <label class="col-md-3 col-md-offset-3"  id="userMessage1" style="color: red"></label>
+                                          </div>
+                                          <div class="row">
+
+                                              <div class="col-md-7 col-md-offset-3" style="height: 270px" id="loadCustomerCred">
+                                                  <!--   折线图表示用户信用分的变化情况 -->
+                                              </div>
+
+                                          </div>
+
+                                      </div>
+
                                     </div>
                                 </div>
 
@@ -99,7 +111,11 @@
                                     <!--                                    图表-->
                                     <div class="row">
                                         <label class="col-md-3">用户信用分:</label>
-                                        <div class="col-md-7" style="height: 270px" id="customerCred">
+                                        <label class="col-md-3 col-md-offset-3"  id="userMessage" style="color: red"></label>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-7 col-md-offset-3" style="height: 270px" id="customerCred">
                                             <!--   折线图表示用户信用分的变化情况 -->
                                         </div>
 
@@ -128,7 +144,7 @@
 
 
                         <div class="row">
-                            <a href="loanIndex.html"><input type="button" class="btn btn-default" style="margin-left: 10px" value="返回"></a>
+                            <a th:href="@{/shenpi}"><input type="button" class="btn btn-default" style="margin-left: 10px" value="返回"></a>
                             <a><input type="button" class="btn btn-danger col-md-offset-4 btn-lg" id="notAgree" value="不通过"></a>
                             <a ><input type="button" class="btn btn-success btn-lg" style="margin-left: 10px" id="agree" value="通过"></a>
                         </div>

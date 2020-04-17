@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/head :: common_head(~{::title},~{})}">
 
     <title>客户详细</title>
@@ -27,7 +27,7 @@
         <div class="page-wrapper">
             <div class="page-breadcrumbs">
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="index.html">首页</a></li>
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
                 </ol>
             </div>
             <div class="page-header position-relative">
@@ -54,7 +54,10 @@
                                          <label class="col-md-2">姓名:</label>
                                         <label class="col-md-2  " id="customerName" th:text="${customer.name}"></label>
                                     </div>
+
                                     <input type="hidden" id="customerId" th:value="${customer.id}">
+
+
                                     <div class="row row-margin-top">
                                         <label class="col-md-3">身份证号:</label>
                                         <label id="idCard" class="col-md-2 " style="left: -50px" th:text="${customer.idCard}"></label>
@@ -104,9 +107,17 @@
 
 
                                     <div class="row">
-                                        <label class="col-md-3">用户信用分:</label>
-                                            <div class="col-md-7" style="height: 270px" id="customerCred">
-<!--   折线图表示用户信用分的变化情况 -->
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-md-3">用户信用分:</label>
+                                                <label id="scoreMessage" class="col-md-3 col-md-offset-3" style="color: red" ></label>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-7 col-md-offset-3" style="height: 270px" id="customerCred">
+                                            </div>
+
+
+<!--   折线图表示用户信用分的变化情况 -->     </div>
 
 
 
@@ -117,13 +128,15 @@
                                     <div class="row">
 
                                         <label class="col-md-3">用户贷款:</label>
+                                        <label id="conMessage" class="col-md-3" style="color: red"></label>
                                         <label class="col-md-2 col-md-push-1 control-label">年份</label>
-                                        <div class="col-md-4" style="margin-top: -5px">
-                                            <select class="form-control" id="yearSelect" style="width: 200px">
+                                        <div class="col-md-3" style="margin-top: -5px">
+<!--                                            TODO:这里的下拉选择框 挺好，首页抄一哈-->
+                                            <select class="form-control" id="yearSelect" style="width: 150px">
                                                 <option>---请选择---</option>
-                                                <option>2019</option>
                                             </select>
                                         </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12" style="height: 270px" id="customerLoan">

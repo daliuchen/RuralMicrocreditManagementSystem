@@ -3,6 +3,7 @@ package com.liuchen.bishe.bishe.controller;
 import com.github.pagehelper.PageInfo;
 import com.liuchen.bishe.bishe.entry.Contract;
 import com.liuchen.bishe.bishe.entry.Customer;
+import com.liuchen.bishe.bishe.exception.DeleteException;
 import com.liuchen.bishe.bishe.exception.FindException;
 import com.liuchen.bishe.bishe.myEnum.ConstractEnum;
 import com.liuchen.bishe.bishe.myEnum.ExceptionCodeEnum;
@@ -88,22 +89,23 @@ public class ConstractController {
 
     //已还款
     @GetMapping("/repayment")
+    @ResponseBody
     public ReturnT repayment(String no,String status,@SessionAttribute("user") Customer customer){
         int customerId = customer.getId();
         if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_XUQI.getName())) {
-            constractService.repayment(no.trim(),ConstractEnum.CONSTRACT_ENUM_XUQI,customerId);
+            constractService.repayment(no.trim(),ConstractEnum.CONSTRACT_ENUM_YU_QI_MONEY,customerId);
             return ReturnT.SUCCESS;
         }
 
 
         if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_WEIDAOQI.getName())) {
-            constractService.repayment(no.trim(),ConstractEnum.CONSTRACT_ENUM_WEIDAOQI,customerId);
+            constractService.repayment(no.trim(),ConstractEnum.CONSTRACT_ENUM_TI_QIAN_MONEY,customerId);
             return ReturnT.SUCCESS;
         }
 
 
         if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_TODAY.getName())) {
-            constractService.repayment(no.trim(),ConstractEnum.CONSTRACT_ENUM_TODAY,customerId);
+            constractService.repayment(no.trim(),ConstractEnum.CONSTRACT_ENUM_AN_SHI_MONEY,customerId);
             return ReturnT.SUCCESS;
         }
         return ReturnT.FAIL;
@@ -112,7 +114,7 @@ public class ConstractController {
 
     @GetMapping("/info/{no}/{status}")
     public String infoContract(@PathVariable("no") String no, @PathVariable("status") String status, Map model) throws FindException {
-        //TODO:查看合同详细，合同管理还没有做，只写好了，没有测试，三个页面都是一样的。每次都传递no和status
+
         Contract contract = null;
         if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_XUQI.getName())) {
             contract = constractService.getContractByNoAndStatus(no.trim(),ConstractEnum.CONSTRACT_ENUM_XUQI);
@@ -124,9 +126,29 @@ public class ConstractController {
             contract =  constractService.getContractByNoAndStatus(no.trim(),ConstractEnum.CONSTRACT_ENUM_TODAY);
         }
         model.put("contract",contract);
-        //TODO：使用pdf显示。支持下载
+        /**
+         * TODO:查看合同详情，有bug。PDF不能显示中文。
+         * 我的想法：
+         *  查看合同详情用pdf显示
+         *
+         * 2: 什么还没有弄
+         *  - 首页
+         *  - 用户登录之后页面的隐藏 和权限的管理
+         */
+
         return "test1";
     }
+
+    @ResponseBody
+    @GetMapping("/deleteContract/{no}")
+    public ReturnT deleteContractByNo(@PathVariable("no") String no) throws DeleteException {
+        constractService.deleteContractByNo(no);
+        return ReturnT.SUCCESS;
+    }
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 package com.liuchen.bishe.bishe.entry;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -19,7 +20,9 @@ public class Contract implements Serializable {
     private String no;
     private Customer customer; //对应的外键
     private String detail;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date begin;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date end;
     private BigDecimal money;
     private Date moneyBack;

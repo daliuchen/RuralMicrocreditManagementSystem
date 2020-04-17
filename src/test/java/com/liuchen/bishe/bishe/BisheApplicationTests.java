@@ -13,10 +13,12 @@ import com.liuchen.bishe.bishe.util.GetAddress;
 import com.liuchen.bishe.bishe.util.PDFGenerator;
 import com.liuchen.bishe.bishe.vo.CustomerContractMonthVo;
 import com.lowagie.text.DocumentException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -26,8 +28,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 @SpringBootTest
+@Slf4j
 class BisheApplicationTests {
 
     @Autowired
@@ -50,6 +55,18 @@ class BisheApplicationTests {
 
     @Autowired
     private ConstractService constractService;
+
+
+
+
+    /**
+     * md5 测试
+     */
+    @Test
+    public void demo7(){
+        String s = DigestUtils.md5DigestAsHex("admin".getBytes());
+        System.out.println(s);
+    }
 
 
 

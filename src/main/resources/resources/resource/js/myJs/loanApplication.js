@@ -37,7 +37,7 @@ $(function () {
 
     });
 
-
+    //最大贷款年限
     $("#inputMoney").blur(function () {
         var money = $(this).val();
         if(money.trim() != ""){
@@ -49,13 +49,15 @@ $(function () {
               console.log(obj)
                     if(obj.code == 200){
                         console.log(obj)
-                            $("#maxyear").text(obj.content.maxYear);
+                            $("#maxyear").text("最大贷款年限："+obj.content.maxYear);
                     }else{
                         //出错
                     }
           });
         }
    });
+
+
 
     $("#agree").click(function () {
 
@@ -75,7 +77,6 @@ $(function () {
                     text: "",
                     type: "success"
                 },function (ifConfirm) {
-                    alert(1);
                     $("#formLoan").submit();
                 })
 

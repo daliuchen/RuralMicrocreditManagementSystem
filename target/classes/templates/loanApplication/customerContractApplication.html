@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/head :: common_head(~{::title},~{})}">
     <title>贷款申请</title>
 </head>
@@ -24,9 +24,9 @@
         <div th:replace="~{commons/page-top :: common_side}"></div>
 
         <div class="page-wrapper">
-            <div class="page-breadcrumbs">
+            <div class="page-breadczrumbs">
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="index.html">首页</a></li>
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
                 </ol>
             </div>
             <div class="page-header position-relative">
@@ -58,8 +58,8 @@
                                     <!--                               这里的贷款时间，是ajax 根据用户的选择的金额来重写贷款时间的select -->
                                     <label class="col-md-3 col-md-offset-2" style="font-size: 40px">贷款时间:</label>
                                     <input class="col-md-4" style="height: 50px" type="text" name="maxYear">
-                                    <label class="col-md-2">格式：x-x</label>
-                                    <label id="maxyear"></label>
+                                    <label class="col-md-2">格式：年-月</label>
+                                    <label id="maxyear" style="color: red"></label>
 
                                 </div>
 
@@ -69,7 +69,7 @@
                                     <!--                               这里的贷款时间，是ajax 根据用户的选择的金额来重写贷款时间的select -->
                                     <label class="col-md-3 col-md-offset-2" style="font-size: 40px">担保人:</label>
                                     <input class="col-md-4" style="height: 50px" type="text"  name="loanPeople" id="loanPeople">
-                                    <label id="loanMessage"></label>
+                                    <label id="loanMessage" style="color: red"></label>
                                 </div>
 
 

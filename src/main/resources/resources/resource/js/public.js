@@ -31,7 +31,7 @@ publicFun.prototype={
         //测试时隐藏非测试的干扰模块（地址栏参数包含"test="字符，）
         this.test();
         //登录超时提醒
-        this.overTimeOut();
+        // this.overTimeOut();
         //退出
         this.logout();
         //验证用户是否登录
@@ -85,7 +85,7 @@ publicFun.prototype={
     styleSetNav:function(){
         $(".set-switcher-heading-icon").bind("click",function(){
             $("#setBox").toggleClass("open");
-            
+
         });
     },
     //换肤效果
@@ -184,7 +184,7 @@ publicFun.prototype={
         };
 
         /* 定时器  间隔1秒检测是否长时间未操作页面  */
-        window.setInterval(testTime, 1000);
+      //  window.setInterval(testTime, 1000);
     },
     //退出登录
     logout:function(){

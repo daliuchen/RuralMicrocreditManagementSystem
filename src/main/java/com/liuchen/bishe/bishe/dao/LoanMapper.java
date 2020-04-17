@@ -26,7 +26,7 @@ public interface LoanMapper {
      * @param no
      * @param status
      */
-     void upDateStatusByNo(@Param("no") String no,@Param("status") String status);
+     int  upDateStatusByNo(@Param("no") String no,@Param("status") String status);
 
 
     /**
@@ -61,6 +61,15 @@ public interface LoanMapper {
      * @return
      */
      LoanApplication getLoanApplicationById(int id);
+
+
+    /**
+     * ------------------------------------------------------------------------>
+     *
+     * 供 首页查询使用
+     * ------------------------------------------------------------------------>
+     */
+    int countLoanApplicationWithStatus();
 
 
 }
