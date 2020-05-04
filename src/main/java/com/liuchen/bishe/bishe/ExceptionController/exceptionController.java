@@ -2,6 +2,7 @@ package com.liuchen.bishe.bishe.ExceptionController;
 
 import com.liuchen.bishe.bishe.exception.DeleteException;
 import com.liuchen.bishe.bishe.exception.FindException;
+import com.liuchen.bishe.bishe.exception.SystemErrorException;
 import com.liuchen.bishe.bishe.vo.ReturnT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,6 +31,15 @@ public class exceptionController {
     public ReturnT deleteException(){
         return ReturnT.FAIL;
     }
+
+    @ExceptionHandler(value = SystemErrorException.class)
+    public String systemErrorException(Exception e){
+        //TODO:之后写这个找不到的请求 url
+        return "redirect:/bishe/notFound";
+    }
+
+
+
 
 
 }

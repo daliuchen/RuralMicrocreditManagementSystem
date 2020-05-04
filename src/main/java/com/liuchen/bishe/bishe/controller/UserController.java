@@ -53,7 +53,7 @@ public class UserController {
      * @throws FindException
      */
     @PostMapping("/login")
-    public ModelAndView doLogin(RedirectAttributes attributes, @NotNull String account, @NotNull String password, @NotNull String code, HttpSession session) throws FindException {
+    public ModelAndView doLogin(RedirectAttributes attributes, @NotNull String account, @NotNull String password, @NotNull String code, HttpSession session)   {
         ModelAndView modelAndView = new ModelAndView();
 
         String role = null;
@@ -71,18 +71,32 @@ public class UserController {
         try {
             customer = customerService.validateCustomer(account, password);
             //说明是普通用户
+            log.debug(" ----》 普通用户  登录  用户名：{}  用户idCard {}  用户role {}",customer.getName(),customer.getIdCard(),customer.getRole());
             role="0";
+
 
         } catch (AdminException e) {
             //说明登陆的用户的管理员
             role="-1";
             customer = e.getCustomer();
 
+            log.debug(" ----》 管理员  登录  用户名：{}  用户idCard {}  用户role {}",customer.getName(),customer.getIdCard(),customer.getRole());
+
 
         } catch (SuperAdminException e) {
             //说明登陆的用户是超级管理  超级管理元可以添加管理员
             role="1";
             customer = e.getCustomer();
+
+            log.debug(" ----》 超级管理元  登录  用户名：{}  用户idCard {}  用户role {}",customer.getName(),customer.getIdCard(),customer.getRole());
+
+
+        } catch (FindException e) {
+            //用户账号不存在
+            modelAndView.setViewName("redirect:/toLogin");
+            attributes.addFlashAttribute("message","密码或者用户错误");//spring mvc 自己带的，之前的redirect会将参数放到url中（get），这个是放在session里面，页面跳转之后就直接活期
+            log.debug("用户名或者密码错误");
+            return  modelAndView;
         }
 
         if (customer == null) {
@@ -280,15 +294,26 @@ public class UserController {
     }
 
 
-    @GetMapping("/logout")
+    @GetMapping("/customerlogout")
     @ResponseBody
     public ReturnT logout(HttpSession session){
-        //清除session
-        log.info("----> 用户 成功退出");
-        session.invalidate();
 
+        log.info("---->普通 用户 成功退出");
+        session.removeAttribute("user");
         return ReturnT.SUCCESS;
     }
+
+
+
+    @GetMapping("/adminLogout")
+    @ResponseBody
+    public ReturnT adminLogout(HttpSession session){
+
+        log.info("---->普通 用户 成功退出");
+        session.removeAttribute("user");
+        return ReturnT.SUCCESS;
+    }
+
 
 
 

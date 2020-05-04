@@ -7,9 +7,9 @@ $(function () {
 
     //搜索框
     $("#searchbtn").bind("click",function () {
-        var idCard = $("#searchCustomerInput").val();
-        if(idCard.trim() == ""){
-            alert("请输入")
+        var idCard = $("#searchCustomerInput").val().trim();
+        if(idCard == ""){
+            alert("请输入身份证号")
             return;
         }
         $("#tableConstract").bootstrapTable("refresh",{query: {idCard:idCard}});
@@ -38,6 +38,7 @@ $(function () {
         },
         responseHandler:function(res){
             if (res.code == 200){
+                console.log("失效合同");
                 console.log(res);
 
                 //成功获取
@@ -57,6 +58,7 @@ $(function () {
                         rowObj.name = constracts[i].customer.name;
                         rowObj.idCard = constracts[i].customer.idCard;
                         rowObj.no = constracts[i].no;
+                        rowObj.money = constracts[i].money;
                         rowObj.begin = constracts[i].begin;
                         rowObj.end = constracts[i].end;
                         tableObj.push(rowObj)
@@ -96,6 +98,10 @@ $(function () {
             {
                 title: '合同号',
                 field: 'no'
+            },
+            {
+                title: '贷款金额',
+                field: 'money'
             },
             {
                 title: '合同开始时间',

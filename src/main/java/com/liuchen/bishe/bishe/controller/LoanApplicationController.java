@@ -33,6 +33,15 @@ public class LoanApplicationController {
     private LoanService loanService;
 
 
+    /**
+     * 贷款申请 客户提交贷款申请
+     * @param money             金额
+     * @param year              贷款时间
+     * @param loanPeople        担保人
+     * @param idCard            担保人姓名
+     * @param session           session中的当前登录的客户
+     * @return
+     */
     @PostMapping("/add")
     public String addLoan(@RequestParam("money")double money,
                            @RequestParam("maxYear") String year ,
@@ -48,7 +57,7 @@ public class LoanApplicationController {
 
 
     /**
-     * 查询这个人所有的贷款申请
+     * 查询当前客户的所有贷款申请，我的业务-》我的申请
      * @param limit
      * @param offset
      * @param session
@@ -106,8 +115,13 @@ public class LoanApplicationController {
     }
 
 
-
-
+    /**
+     * 贷款申请通过 。 管理员 功能
+     * @param no
+     * @param customer
+     * @return
+     * @throws FindException
+     */
     @GetMapping("/agree")
     @ResponseBody
     public ReturnT agreeLoanApplication(String no,@SessionAttribute("user") Customer customer) throws FindException {
@@ -120,10 +134,28 @@ public class LoanApplicationController {
 
     @GetMapping("/notAgree")
     @ResponseBody
-    public ReturnT notAgreeLoanApplication(String no){
-        loanService.notAgreeloanApplication(no);
+    public ReturnT notAgreeLoanApplication(String no,@SessionAttribute("user") Customer customer){
+        loanService.notAgreeloanApplication(no,customer.getId());
         return ReturnT.SUCCESS;
     }
+
+
+    /*
+    TODO:
+        之后测试一下
+       一个请求对应两个重载方法，看能不能处理到
+     */
+
+//
+//      这里是写错了
+//    @GetMapping("/backMyLoan/{no}")
+//    @ResponseBody
+//    public ReturnT backLoan(@PathVariable("no") String no ,int a){
+//        System.out.println(no);
+//        loanService.backMyLoan(no.trim());
+//        return  ReturnT.SUCCESS;
+//    }
+
 
 
 

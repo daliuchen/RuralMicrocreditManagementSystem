@@ -174,7 +174,7 @@ public class RestController {
 
 
     /**
-     * 获取用户头像的图片，TODO:因为我在登录页面页使用了他，如果账号不存在，这就有空指针异常
+     * 获取用户头像的图片
      * @param idCard
      * @param response
      * @throws IOException

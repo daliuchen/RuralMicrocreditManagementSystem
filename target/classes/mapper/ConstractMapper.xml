@@ -56,7 +56,7 @@
         update  t_contract set begin=#{begin},
                                end=#{end},
                                status=#{staus}
-                            where no=#{no}
+                            where no=#{no} and isDelete=1
     </update>
 
 
@@ -82,7 +82,25 @@
                 <if test="status != null">
                    and status=#{status}
                 </if>
+                and isDelete=1
             </where>
+    </select>
+
+<!--        List<Contract> listContractByCustomerId(@Param("customerId") int customerId);-->
+    <select id="listContractByCustomerId" resultMap="contractMapping" >
+        select
+        <include refid="sql"></include>
+        from  t_contract
+        <where>
+            <if test="customerId != -1">
+                customerId=#{customerId}
+            </if>
+            and `status` != '甲方签署'
+            and `status` != '乙方签署'
+            and `status` != '乙方不签署'
+            and isDelete=1
+        </where>
+            order by id desc
     </select>
 
 
@@ -165,6 +183,13 @@
         )
     </update>
 
+<!--    void updateByLoanApplicationNo(int loanId,String status);-->
+    <update id="updateByLoanApplicationNo">
+             update t_contract set status=#{status}
+                            where loanId=#{loanId}
+
+    </update>
+
 
     <!--    Contract getContractByno(String no,String status);-->
     <select id="getContractByno" resultMap="contractMapping">
@@ -197,6 +222,11 @@
         select count(1) from t_contract where `status` = #{status}
     </select>
 
+
+<!--    String getNoByLoanId(int loanId);-->
+    <select id="getNoByLoanId" resultType="java.lang.String">
+        select `no` from t_contract where loanId=#{loanId}
+    </select>
 
 
 

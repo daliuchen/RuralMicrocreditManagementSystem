@@ -80,7 +80,7 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public void backMyLoan(String no) {
-        loanMapper.upDateStatusByNo(no, LoanStatusEnum.LOAN_STATUS_ENUM_CHE_XIAO.getName());
+        loanMapper.upDateStatusByNo(no, LoanStatusEnum.LOAN_STATUS_ENUM_CHE_XIAO.getName(),-1);
     }
 
 
@@ -128,7 +128,7 @@ public class LoanServiceImpl implements LoanService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void agreeloanApplication(String no, int assessOfferId) throws FindException {
-        loanMapper.upDateStatusByNo(no, LoanStatusEnum.LOAN_STATUS_ENUM_TONG_GUO.getName());
+        loanMapper.upDateStatusByNo(no, LoanStatusEnum.LOAN_STATUS_ENUM_TONG_GUO.getName(),assessOfferId);
         //通过贷款编号查找
         List<LoanApplication> loanByNoAndStatus = loanMapper.findLoanByNoAndStatus(no, null);
         if (loanByNoAndStatus.size() > 1) {
@@ -144,8 +144,8 @@ public class LoanServiceImpl implements LoanService {
 
 
     @Override
-    public void notAgreeloanApplication(String no) {
-        loanMapper.upDateStatusByNo(no, LoanStatusEnum.LOAN_STATUS_ENUM_NOT_PASS.getName());
+    public void notAgreeloanApplication(String no,int id) {
+        loanMapper.upDateStatusByNo(no, LoanStatusEnum.LOAN_STATUS_ENUM_NOT_PASS.getName(),id);
     }
 
 

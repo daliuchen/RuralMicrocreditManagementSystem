@@ -57,6 +57,7 @@ $(function () {
                         rowObj.name = constracts[i].customer.name;
                         rowObj.idCard = constracts[i].customer.idCard;
                         rowObj.no = constracts[i].no;
+                        rowObj.money = constracts[i].money;
                         rowObj.begin = constracts[i].begin;
                         rowObj.end = constracts[i].end;
                         tableObj.push(rowObj)
@@ -96,6 +97,10 @@ $(function () {
             {
                 title: '合同号',
                 field: 'no'
+            },
+            {
+                title: '贷款金额',
+                field: 'money'
             },
             {
                 title: '合同开始时间',

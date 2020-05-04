@@ -13,6 +13,7 @@ import com.liuchen.bishe.bishe.util.GetAddress;
 import com.liuchen.bishe.bishe.util.PDFGenerator;
 import com.liuchen.bishe.bishe.vo.CustomerContractMonthVo;
 import com.lowagie.text.DocumentException;
+import com.sun.org.apache.xpath.internal.operations.String;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
@@ -58,43 +60,41 @@ class BisheApplicationTests {
 
 
 
-
-    /**
-     * md5 测试
-     */
     @Test
-    public void demo7(){
-        String s = DigestUtils.md5DigestAsHex("admin".getBytes());
-        System.out.println(s);
+    public void demo9(){
+        String[] strings = {};
+        System.out.println(strings.length);
     }
 
 
 
+
+
+
+
+
+
+
+
+
     @Test
-    public void demo6(){
-        PDFGenerator pdfGenerator = new PDFGenerator("templates/",".html");
-        Map<String,Object> model = new HashMap<>();
-        model.put("a","你好");
-        model.put("b","2");
-        model.put("c","3");
-        model.put("d","4");
-
-        File file = new File("/Users/liuchen/Desktop/1.pdf");
-
-        try {
-//file是要生成的文件名
-//中间为modlViewName
-//model传到页面的参数
-            pdfGenerator.generate(file,"test",model);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
+    public void demo8(){
 
 
+
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end = LocalDateTime.now();
+        System.out.println(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
+        LocalDateTime localDateTime = end.plusYears(2).plusMonths(3);
+
+        System.out.println(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
+
+
+
+
+
 
 
     @Test
@@ -161,23 +161,7 @@ class BisheApplicationTests {
 
 
 
-    @Test
-    void contextLoads() {
 
-        String customerAddress = getAddress.getCustomerAddress(null, " 陈村镇李家堡村32组 额饿饿");
-        System.out.println(customerAddress);
-
-
-//        String s = AddressUtil.spellingAddress("12312312", "3423432", "432423");
-//        System.out.println(s);
-//
-//        List<Integer> integers = AddressUtil.dismantlingAddress(s);
-//        for (Integer i:integers){
-//            System.out.println(i);
-//        }
-
-
-    }
 
 
 

@@ -42,6 +42,8 @@ public class CommonsConfig extends WebMvcConfigurerAdapter {
 
         //我的贷款申请
         registry.addViewController("/MyLoan").setViewName("my/customerContractIndex");
+        registry.addViewController("/myContract").setViewName("my/myContract");
+
 
 
         // 贷款管理 > 审批

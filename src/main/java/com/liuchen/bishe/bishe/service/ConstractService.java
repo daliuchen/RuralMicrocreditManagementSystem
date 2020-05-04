@@ -70,5 +70,33 @@ public interface ConstractService {
     void addContract(LoanApplication loanApplication,int assessingOfficerId);
 
 
+    /**
+     * 通过贷款申请号 来更新合同的状态
+     * @param loanNo        贷款申请号
+     * @param constractEnum 合同状态
+     */
+    void updateContractByLoanNo(String loanNo,ConstractEnum constractEnum);
+
+
+    /**
+     * 生成合同
+     * @param loanNo    贷款申请 no
+     */
+    public void goContact(String loanNo);
+
+
+    /**
+     * 查找当前登录用户的所有合同c 通过cusotmerId
+     * @param offset
+     * @param limit
+     * @param cusotmerId
+     * @return
+     */
+    PageInfo<Contract> findMyContract(int offset, int limit, int cusotmerId) throws FindException;
+
+
+
+
+
 
 }

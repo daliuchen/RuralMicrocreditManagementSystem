@@ -16,6 +16,9 @@ $(function () {
         showRefresh:true,//显示刷新按钮
         sidePagination : 'server',//server:服务器端分页|client：前端分页
         pageSize : 5,//单页记录数
+        sortable: true,                     //是否启用排序
+        sortOrder: "asc",                   //排序方式
+
         pageList : [ 5, 10, 15],//可选择单页记录数
         queryParams : function (params) {
             var temp = {
@@ -36,9 +39,7 @@ $(function () {
                     for (var i = 0; i < loan.length; i++) {
                         //定义一个行对象
                         var rowObj = {
-                            'name':'',
                             'no':'',
-                            'idCard':'',
                             'money':'',
                             'time':'',
                             'createDate':'',
@@ -91,6 +92,7 @@ $(function () {
             {
                 title: '贷款时间',
                 field: 'time',
+                sortable: true,
                 formatter:function (value,row,index) {
 
                     var splite = value.toString().split("-")
@@ -114,20 +116,33 @@ $(function () {
 
             {
                 title:'操作',
-                formatter:operation
+                formatter:function(value,row,index){
+                    var no=row.no;
+                    var htm1;
+                    var status = row.status;
+                    if(status == '通过'){
+                        //合同通过
+                        htm1 = '<button class="btn btn-success" style="margin-left: 10px;" onclick="goContract('+" ' "+no+" ' "+')">生成合同</button>';
+                        var html2 = '<button class="btn btn-danger" style="margin-left: 10px;" onclick="backContract('+" ' "+no+" ' "+')">撤销合同</button>';
+                        htm1 = htm1+html2;
+                    }else if(status =='未处理'){
+                        htm1 = '<button class="btn btn-danger" style="margin-left: 10px;" onclick="deleteLoan('+" ' "+no+" ' "+')">撤销申请</button>';
+                    }else if(status == '已有合同生成'){
+                        htm1 = '<label class="" style="margin-left: 10px; color: orange">申请已通过。请按时还款</label>';
+                    }else if(status == '不通过'){
+                        htm1 = '<label class="" style="margin-left: 10px; color: red">申请不通过。请到柜台咨询</label>';
+                    }else{
+                        htm1 = '<label class="" style="margin-left: 10px;">申请已经撤销。</label>';
+                    }
+
+
+                    return htm1;
+                }
             }
         ]                 //列设置
     });
 
 
-    function operation(value,row,index) {
-
-        var no = row.no;
-        console.log(no+"合同编号");
-        var htm1 = '<button class="btn btn-danger" style="margin-left: 10px;" onclick="deleteLoan('+" ' "+no+" ' "+')">撤销</button>';
-        return htm1;
-
-    }
 
 
 
@@ -137,6 +152,71 @@ $(function () {
 
 
 });
+
+
+//撤销合同
+function backContract(obj) {
+    //发送请求
+        //合同的状态变为乙方不签署
+    swal({
+        title: "确认撤销此合同",
+        text: "该合同还没有起效，可以撤销",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "ok",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function(isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                url:"constract/backContract/"+obj,
+                dataType:"json",
+                success:function (obj) {
+                    if(obj.code == 200){
+                        $("#tableList").bootstrapTable('refresh');
+
+                        swal("撤销!", "撤销成功！", "success");
+                    }else{
+                        swal("撤销!", "撤销失败！", "error");
+                    }
+                }
+            });
+        } else{
+            swal("取消!", "取消成功！", "error")
+        }
+    })
+
+}
+
+
+
+//贷款申请通过，生成合同
+function goContract(obj){
+    //发送请求
+       // 将对应的合同状态变为乙方签署
+       // 之后将合同起效 合同状态变为未到期。
+        // 对应的申请的状态变为 已有合同生成
+    $.ajax({
+        url:"constract/goContract/"+obj,
+        dataType:"json",
+        success:function (obj) {
+            if(obj.code == 200){
+                swal("成功!", "合同起效！", "success");
+                swal("提示!", "请按期还款！", "success");
+                $("#tableList").bootstrapTable('refresh');
+            }else{
+                //TODO：500 失败
+            }
+        }
+    });
+}
+
+
+
+
+
 
 //撤销
 function deleteLoan(obj) {

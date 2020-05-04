@@ -71,7 +71,7 @@ public interface LoanService {
          * 贷款申请不通过
          * @param no
          */
-        public void notAgreeloanApplication(String no);
+        public void notAgreeloanApplication(String no,int id);
 
 
 

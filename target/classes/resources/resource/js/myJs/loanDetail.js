@@ -39,7 +39,9 @@ $(function () {
     $("#loanCreateTime").text(date1);
 
 
-    //申请不通过
+
+
+     //申请不通过
     $("#notAgree").click(function () {
 
         swal({
@@ -101,6 +103,13 @@ $(function () {
                                 type: "success"
                             }, function (ifConfirm) {
                                 window.location.href = "shenpi";
+                                /**
+                                 * TODO: 大问题：因为在session里面放的customer和user都是同一个对象，这就导致不能同时登录两个账号
+                                 *  - 应该在贷款管理下面添加一个新的栏目，叫做，未签署的合同。 用来显示申请通过后乙方还没有签署的合同
+                                 *  - 在乙方登录的上来，应该显示之前通过的申请
+                                 */
+
+
                             });
                         } else {
                             //报错 505
@@ -243,19 +252,16 @@ $(function () {
                 {
                     name: '按时还款',
                     type: 'line',
-                    stack: '总量',
                     data: obj.content.anShi
-                },
-                {
-                    name: '逾期还款',
-                    type: 'line',
-                    stack: '总量',
-                    data: obj.content.tiQian
                 },
                 {
                     name: '提前还款',
                     type: 'line',
-                    stack: '总量',
+                    data: obj.content.tiQian
+                },
+                {
+                    name: '逾期还款',
+                    type: 'line',
                     data: obj.content.yuQi
                 }
 

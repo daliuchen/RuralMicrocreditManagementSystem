@@ -5,7 +5,7 @@ $(function () {
         var val = $("#oldPassword").val();
         if(val.trim() == "" || val.length == 0){
             alert("请填写旧密码")
-        }
+        }saveBtn
     });
 
     $("#newPassword").blur(function () {
@@ -15,6 +15,8 @@ $(function () {
            //bu相等
            alert("两次填写的密码不一样")
        }
+       $("#saveBtn").removeAttr('disabled');
+
     });
 
 

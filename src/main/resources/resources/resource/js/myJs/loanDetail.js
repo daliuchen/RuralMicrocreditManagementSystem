@@ -252,19 +252,16 @@ $(function () {
                 {
                     name: '按时还款',
                     type: 'line',
-                    stack: '总量',
                     data: obj.content.anShi
-                },
-                {
-                    name: '逾期还款',
-                    type: 'line',
-                    stack: '总量',
-                    data: obj.content.tiQian
                 },
                 {
                     name: '提前还款',
                     type: 'line',
-                    stack: '总量',
+                    data: obj.content.tiQian
+                },
+                {
+                    name: '逾期还款',
+                    type: 'line',
                     data: obj.content.yuQi
                 }
 

@@ -43,10 +43,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public PageInfo getAllAdmin(int offset, int limit, String idCard) throws FindException {
         Page<Object> page = PageHelper.startPage(offset, limit);
-        List<Customer> admins = customerMapper.findCustomerByIdCard(idCard,"admin");
+        List<Customer> admins = customerMapper.findCustomerByIdCard(idCard, "admin");
 
-        if(true == admins.isEmpty()){
-            throw  new FindException("管理员index 查找失败 ",ExceptionCodeEnum.EXCEPTION_CODE_ENUM_NOTFIND);
+        if (true == admins.isEmpty()) {
+            throw new FindException("管理员index 查找失败 ", ExceptionCodeEnum.EXCEPTION_CODE_ENUM_NOTFIND);
         }
 
         for (Customer admin :
@@ -56,12 +56,9 @@ public class AdminServiceImpl implements AdminService {
         }
 
 
-
         PageInfo<Customer> pageInfo = new PageInfo<>(admins);
-        return  pageInfo;
+        return pageInfo;
     }
-
-
 
 
     @Override
@@ -70,57 +67,51 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addCustomer(Customer customer) throws FindException {
-         customerMapper.addCustomer(customer);
+        customerMapper.addCustomer(customer);
 
-         //TODO: 获取不了 自增的ID 在xml文件中配置页配置好了，但就是获取不到，解决方法 在查一遍 就OK
+        //TODO: 获取不了 自增的ID 在xml文件中配置页配置好了，但就是获取不到，解决方法 在查一遍 就OK
 
 
         List<Customer> customers = customerMapper.findCustomerByIdCard(customer.getIdCard(), null);
-        if(customers.size()!=1){
-            throw new FindException("添加用户出错，",ExceptionCodeEnum.EXCEPTION_CODE_ENUM_FINDMANY);
+        if (customers.size() != 1) {
+            throw new FindException("添加用户出错，", ExceptionCodeEnum.EXCEPTION_CODE_ENUM_FINDMANY);
         }
 
-        scoreMapper.addScore(500,customers.get(0).getId());
+        scoreMapper.addScore(500, customers.get(0).getId());
 
     }
-
-
 
 
     @Override
     public Customer getCustomerByIdCard(String idCard) throws FindException {
         List<Customer> admins = customerMapper.findCustomerByIdCard(idCard, "admin");
-        if(true == admins.isEmpty()){
-            throw  new FindException(ExceptionCodeEnum.EXCEPTION_CODE_ENUM_NOTFIND);
+        if (true == admins.isEmpty()) {
+            throw new FindException(ExceptionCodeEnum.EXCEPTION_CODE_ENUM_NOTFIND);
         }
-        if(true == admins.size() > 1){
+        if (true == admins.size() > 1) {
             throw new FindException(ExceptionCodeEnum.EXCEPTION_CODE_ENUM_FINDMANY);
         }
         return admins.get(0);
     }
 
 
-
-
     @Transactional
     @Override
     public void modifyCustomer(Customer customer, String idCard) {
         List<Customer> admins = customerMapper.findCustomerByIdCard(idCard, RoleEnum.ROLE_ENUM_ADMIN.getName());
-        if(admins.get(0).equals(customer)){
+        if (admins.get(0).equals(customer)) {
 
-            if("0,-1,-2".equals(customer.getAddress())){
+            if ("0,-1,-2".equals(customer.getAddress())) {
                 return;
             }
 
         }
 
 
-       customerMapper.updateCustomerWithPhoneEmailAddressAddressDetailPicture(customer,idCard);
+        customerMapper.updateCustomerWithPhoneEmailAddressAddressDetailPicture(customer, idCard);
     }
 
 

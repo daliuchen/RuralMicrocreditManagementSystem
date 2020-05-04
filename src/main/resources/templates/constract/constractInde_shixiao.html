@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/head :: common_head(~{::title},~{})}">
-    <title>失效合同</title>
+    <title>过期合同</title>
 <!-- 失效合同 -->
 
 </head>
@@ -36,14 +36,14 @@
                 <div class="col-lg-12">
                     <div class="widget">
                         <div class="widget-header">
-                            失效合同列表
+                            已还款合同列表
                         </div>
                         <div class="widget-body">
 
                             <div class="btn-group-tool bootstrap-btn-group-tool row" style="margin-bottom: 10px">
 
 
-                                <input type="text" class="col-md-2 col-md-offset-8 " id="searchCustomerInput">
+                                <input type="text" class="col-md-2 col-md-offset-8 " id="searchCustomerInput" placeholder="请输入身份证号">
                                 <button type="button" class="btn btn-default col-md-1 input-sm" style="left: 10px" id="searchbtn">搜索</button>
 
                             </div>

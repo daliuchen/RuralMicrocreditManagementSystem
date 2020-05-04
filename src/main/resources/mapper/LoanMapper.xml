@@ -51,13 +51,23 @@
 <!--    public List<LoanApplication> findLoanByCustomerId(int id);-->
 
     <select id="findLoanByCustomerId" resultMap="loanMapper">
-        select * from t_loan_application where customerId = #{id} and isDelete=1 and status!="撤销"
+        select * from t_loan_application where customerId = #{id} and isDelete=1 order by id desc
     </select>
 
-<!--    public void upDateStatusByNo(@Param("no") String no,@Param("status") String status);-->
 
+<!--         int  upDateStatusByNo(@Param("no") String no,@Param("status") String status,int assessingOfficerId);-->
     <update id="upDateStatusByNo" useGeneratedKeys="true" keyProperty="id" >
-        update t_loan_application set status=#{status} where no=#{no} and isDelete=1
+        update t_loan_application
+        <set>
+           <if test="status != null">
+               status=#{status},
+           </if>
+           <if test="assessingOfficerId != -1">
+               assessingOfficerId=#{assessingOfficerId}
+           </if>
+
+        </set>
+             where no=#{no} and isDelete=1
     </update>
 
 
@@ -109,6 +119,11 @@
 
     <select id="countLoanApplicationWithStatus" resultType="java.lang.Integer">
         select count(1) from t_loan_application where status='未处理'
+    </select>
+
+<!--    int getLoanByNo(String no);-->
+    <select id="getLoanByNo" resultType="java.lang.Integer">
+        select `id` from t_loan_application where no=#{no}
     </select>
 
 

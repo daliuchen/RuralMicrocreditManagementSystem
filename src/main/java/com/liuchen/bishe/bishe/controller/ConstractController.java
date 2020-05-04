@@ -5,6 +5,7 @@ import com.liuchen.bishe.bishe.entry.Contract;
 import com.liuchen.bishe.bishe.entry.Customer;
 import com.liuchen.bishe.bishe.exception.DeleteException;
 import com.liuchen.bishe.bishe.exception.FindException;
+import com.liuchen.bishe.bishe.exception.SystemErrorException;
 import com.liuchen.bishe.bishe.myEnum.ConstractEnum;
 import com.liuchen.bishe.bishe.myEnum.ExceptionCodeEnum;
 import com.liuchen.bishe.bishe.service.ConstractService;
@@ -57,6 +58,10 @@ public class ConstractController {
                 PageInfo pa = constractService.findAllCusotmerByPage(offset, limit,null, ConstractEnum.CONSTRACT_ENUM_TODAY);
                 return new ReturnT(pa);
             }
+            if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_OVER.getName())) {
+                PageInfo pa = constractService.findAllCusotmerByPage(offset, limit,null, ConstractEnum.CONSTRACT_ENUM_OVER);
+                return new ReturnT(pa);
+            }
 
 
         }else{
@@ -79,15 +84,24 @@ public class ConstractController {
                 return new ReturnT(pa);
             }
 
+            if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_OVER.getName())) {
+                PageInfo pa = constractService.findAllCusotmerByPage(offset, limit,idCard.trim(), ConstractEnum.CONSTRACT_ENUM_OVER);
+                return new ReturnT(pa);
+            }
+
 
         }
         return ReturnT.FAIL;
     }
 
 
-
-
-    //已还款
+    /**
+     *  已经还款
+     * @param       no        合同号
+     * @param       status     合同状态
+     * @param       customer    session里面的管理员
+     * @return
+     */
     @GetMapping("/repayment")
     @ResponseBody
     public ReturnT repayment(String no,String status,@SessionAttribute("user") Customer customer){
@@ -118,12 +132,15 @@ public class ConstractController {
         Contract contract = null;
         if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_XUQI.getName())) {
             contract = constractService.getContractByNoAndStatus(no.trim(),ConstractEnum.CONSTRACT_ENUM_XUQI);
-        }
-        if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_WEIDAOQI.getName())) {
+        } else if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_WEIDAOQI.getName())) {
             contract = constractService.getContractByNoAndStatus(no.trim(),ConstractEnum.CONSTRACT_ENUM_WEIDAOQI);
-        }
-        if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_TODAY.getName())) {
+        } else if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_TODAY.getName())) {
             contract =  constractService.getContractByNoAndStatus(no.trim(),ConstractEnum.CONSTRACT_ENUM_TODAY);
+        }
+        else if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_OVER.getName())) {
+            contract =  constractService.getContractByNoAndStatus(no.trim(),ConstractEnum.CONSTRACT_ENUM_OVER);
+        }else{
+            throw new SystemErrorException();
         }
         model.put("contract",contract);
         /**
@@ -146,6 +163,51 @@ public class ConstractController {
         return ReturnT.SUCCESS;
     }
 
+
+    /**
+     * 撤销合同
+     */
+
+    @GetMapping("/backContract/{no}")
+    @ResponseBody
+    public ReturnT backContract(@PathVariable("no") String no){
+            constractService.updateContractByLoanNo(no.trim(),ConstractEnum.CONSTRACT_ENUM_NOTYIFANG);
+            return  ReturnT.SUCCESS;
+    }
+
+
+
+
+    /**
+     * 生成合同
+     * @param no
+     * @return
+     */
+    @GetMapping("/goContract/{no}")
+    @ResponseBody
+    public ReturnT goContract(@PathVariable("no") String no){
+        constractService.goContact(no.trim());
+        return ReturnT.SUCCESS;
+    }
+
+
+    /**
+     * 查找当前登录用户的合同
+     * @param offset
+     * @param limit
+     * @param idCard
+     * @param customer
+     * @return
+     * @throws FindException
+     */
+    @GetMapping("/myContract")
+    @ResponseBody
+    public ReturnT myContract(int offset,int limit,String idCard,@SessionAttribute("user") Customer customer) throws FindException {
+        //当前登录用户id
+        int id = customer.getId();
+        PageInfo<Contract> pageInfo = constractService.findMyContract(offset, limit, id);
+        return new ReturnT(pageInfo);
+    }
 
 
 
