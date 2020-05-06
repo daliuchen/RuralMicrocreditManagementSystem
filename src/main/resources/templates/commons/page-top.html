@@ -36,18 +36,21 @@
 
                     <!--               消息提醒 结束        -->
                     <li class="dropdown messages-menu">
-                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img  th:src="@{/picture/{type}(type=${session.user.idCard})}"  style='height: 40px' class="user-img" > <span class="hedden-xs"> 欢迎您，<span class="loginUser" th:text="${session.user.name}" th:if="${session.role} == '0'" ></span></span></a>
 
+                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:if="${session.role} == '0'"><img  th:src="@{/picture/{type}(type=${session.user.idCard})}"  style='height: 40px' class="user-img" th:if="${session.role} == '0'" > <span class="hedden-xs" th:if="${session.role} == '0'"> 欢迎您，<span class="loginUser" th:text="${session.user.name}" th:if="${session.role} == '0'" ></span></span></a>
+                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:if="${session.role} != '0'"><img  th:src="@{/picture/{type}(type=${session.user1.idCard})}"  style='height: 40px' class="user-img" th:if="${session.role} != '0'" > <span class="hedden-xs" th:if="${session.role} != '0'"> 欢迎您，<span class="loginUser" th:text="${session.user1.name}" th:if="${session.role} != '0'" ></span></span></a>
                         <ul class="dropdown-menu user-box">
                             <li class="user-header">
 
                                 <!--                            个人简介-->
                                 <img th:src="@{/picture/{idcard} (idcard=${session.user.idCard})}" th:if="${session.role} == '0' " class="img-circle" height="90">
-
+                                <img th:src="@{/picture/{idcard} (idcard=${session.user1.idCard})}" th:if="${session.role} != '0' " class="img-circle" height="90">
 <!--                               页面显示 用户名 和 角色 -->
                                 <p th:text="${session.user.name}" th:if="${session.role == '0'}"></p>
-                                <small th:text="${session.user.role}" th:if="${session.role} != '0' "  ></small>
+                                <small  th:if="${session.role} == '0' "  >用户</small>
 
+                                <p th:text="${session.user1.name}" th:if="${session.role != '0'}"></p>
+                                <small th:text="${session.user1.role} == 'admin'?'管理员':'超级管理员' " th:if="${session.role} != '0' "  ></small>
 
 
                             </li>
@@ -58,7 +61,9 @@
                                 </div>
 
                                 <div class="pull-right">
+<!--                                   普通用户 -->
                                     <a class="btn btn-default btnLogout" id="logout" th:if="${session.role} == '0' ">退出</a>
+<!--                                   管理员 -->
                                     <a class="btn btn-default btnLogout" id="logout1" th:if="${session.role} != '0' ">退出</a>
                                 </div>
                             </li>

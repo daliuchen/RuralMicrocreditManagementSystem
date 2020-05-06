@@ -73,13 +73,14 @@ public class UserController {
             //说明是普通用户
             log.debug(" ----》 普通用户  登录  用户名：{}  用户idCard {}  用户role {}",customer.getName(),customer.getIdCard(),customer.getRole());
             role="0";
+            session.setAttribute("user", customer);
 
 
         } catch (AdminException e) {
             //说明登陆的用户的管理员
             role="-1";
             customer = e.getCustomer();
-
+            session.setAttribute("user1", customer);
             log.debug(" ----》 管理员  登录  用户名：{}  用户idCard {}  用户role {}",customer.getName(),customer.getIdCard(),customer.getRole());
 
 
@@ -87,7 +88,7 @@ public class UserController {
             //说明登陆的用户是超级管理  超级管理元可以添加管理员
             role="1";
             customer = e.getCustomer();
-
+            session.setAttribute("user1", customer);
             log.debug(" ----》 超级管理元  登录  用户名：{}  用户idCard {}  用户role {}",customer.getName(),customer.getIdCard(),customer.getRole());
 
 
@@ -107,8 +108,7 @@ public class UserController {
             log.debug("用户名或者密码错误");
             return  modelAndView;
         }
-
-        session.setAttribute("user", customer);
+        //设置角色
         session.setAttribute("role",role);
 
         //如果是customer直接到我的业务里面我的贷款申请
@@ -117,7 +117,7 @@ public class UserController {
             return modelAndView;
         }
 
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("index/index");
         log.info(" 姓名:{} , role:{} , 登录成功",account,customer.getRole());
         return modelAndView;
     }
@@ -310,7 +310,7 @@ public class UserController {
     public ReturnT adminLogout(HttpSession session){
 
         log.info("---->普通 用户 成功退出");
-        session.removeAttribute("user");
+        session.removeAttribute("user1");
         return ReturnT.SUCCESS;
     }
 
@@ -320,7 +320,18 @@ public class UserController {
     //修改密码
     @PostMapping("/modifyPassword")
     @ResponseBody
-    public ReturnT modifyPassword(String oldPassword,String newPassword,@SessionAttribute("user") Customer customer){
+    public ReturnT modifyPassword(String oldPassword,String newPassword,HttpSession session){
+        Customer customer=null;
+        String role = (String)session.getAttribute("role");
+
+        if ("0".equals(role)){
+            customer = (Customer) session.getAttribute("user");
+        }else{
+            customer = (Customer) session.getAttribute("user1");
+        }
+
+
+
         if(oldPassword.equals(newPassword) == false){
             //不相等
             return  new ReturnT(300,"两次输入的密码不一样");

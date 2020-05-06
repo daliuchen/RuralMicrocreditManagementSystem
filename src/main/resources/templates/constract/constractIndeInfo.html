@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/head :: common_head(~{::title},~{})}">
+    <title>合同详情</title>
+
+
+</head>
+<body>
+<!--加载-->
+<div th:replace="~{commons/page-top :: common_top_onLoad}"></div>
+<!--插入导航-->
+<div th:replace="~{commons/page-top :: common_top}"></div>
+
+<!--主体-->
+<div class="main-container container-fluid">
+    <div class="page-container" style="">
+
+        <div th:replace="~{commons/page-top :: common_side}"></div>
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
+                </ol>
+            </div>
+            <div class="page-header position-relative">
+                <div class="header-title title-h1">合同管理</div>
+            </div>
+
+            <div class="page-body">
+                <!--                这里是页面主体 显示部分 开始-->
+
+
+
+                <!--基本表单开始--->
+                <div class="col-lg-12">
+                    <div class="widget">
+                        <div class="widget-header">
+                            合同详情
+                        </div>
+                        <div class="widget-body">
+<!--                          贷款人基本信息 -->
+                            <div class="row">
+                               <div class="col-md-12">
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                           <div class="row">
+                                               <h4 style="padding-left: 10px;color: #737486" >贷款人详情</h4>
+                                               <div style="width: 100%;height: 1px;background-color: #d4ded7"></div>
+                                           </div>
+                                           <div class="row " >
+                                               <label class="col-md-4 " style="font-size: 15pt">贷款人: <span th:text="${contract.customer.name}"></span> </label>
+                                               <label class="col-md-4 " style="font-size: 15pt" >身份证号: <span th:text="${contract.customer.idCard}"></span></label>
+                                               <label class="col-md-4" style="font-size: 15pt">性别: <span th:text="${contract.customer.sex} == '1' ?'男' : '女' "></span></label>
+                                           </div>
+
+                                      </div>
+                                   </div>
+
+                                   <div class="row">
+                                       <label class="col-md-4" style="font-size: 15pt">电话号码: <span th:text="${contract.customer.phone}"></span></label>
+                                       <label class="col-md-4" style="font-size: 15pt">邮箱:<span th:text="${contract.customer.email}"></span></label>
+                                   </div>
+                               </div>
+                            </div>
+<!--                            贷款基本信息-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <h4 style="padding-left: 10px;color: #737486" >贷款基本信息</h4>
+                                        <div style="width: 100%;height: 1px;background-color: #d4ded7"></div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-4" style="font-size: 15pt">合同号: <span th:text="${contract.no}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">贷款金额: <span th:text="${contract.money}"></span></label>
+                                    </div>
+
+                                    <div class="row">
+                                        <label class="col-md-4" style="font-size: 15pt">贷款开始时间: <span th:text="${#dates.format(contract.begin,'yyyy-MM-dd')}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">贷款开始时间: <span th:text="${#dates.format(contract.end,'yyyy-MM-dd')}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">合同状态: <span th:text="${contract.status}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">担保人: <span th:text="${contract.loan.bondsman.name}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">担保人身份证号: <span th:text="${contract.loan.bondsman.idCard}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">操作员: <span th:text="${contract.assessingOfficer.name}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">操作员身份证号: <span th:text="${contract.assessingOfficer.idCard}"></span></label>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            申请基本信息-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <h4 style="padding-left: 10px;color: #737486" >申请基本信息</h4>
+                                        <div style="width: 100%;height: 1px;background-color: #d4ded7"></div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-4" style="font-size: 15pt">申请号: <span th:text="${contract.loan.no}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">: <span th:text="${#dates.format(contract.begin,'yyyy-MM-dd')}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">申请时间: <span th:text="${#dates.format(contract.loan.createDate,'yyyy-MM-dd HH:mm:ss')}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">申请状态: <span th:text="${contract.loan.status}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">操作员: <span th:text="${contract.loan.assessingOfficer.name}"></span></label>
+                                        <label class="col-md-4" style="font-size: 15pt">操作员身份证号: <span th:text="${contract.loan.assessingOfficer.idCard}"></span></label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <a><input type="button" class="btn btn-default  btn-lg" id="back" value="返回"></a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div><!--基本表单结束--->
+
+
+
+
+
+                <!--                这里是页面主体 显示部分 结束-->
+            </div><!---page-body---->
+        </div><!--page-wrapper--->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div th:replace="~{commons/onLoanJs :: js}"></div>
+
+<!--      未到期合同列表  -->
+<script th:src="@{/resource/js/myJs/contractInfo.js}"></script>
+
+
+</body>
+</html>

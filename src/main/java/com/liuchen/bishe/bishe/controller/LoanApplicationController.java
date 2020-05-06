@@ -60,7 +60,7 @@ public class LoanApplicationController {
      * 查询当前客户的所有贷款申请，我的业务-》我的申请
      * @param limit
      * @param offset
-     * @param session
+     * @param session       登录的普通用户
      * @return
      * @throws FindException
      */
@@ -118,13 +118,13 @@ public class LoanApplicationController {
     /**
      * 贷款申请通过 。 管理员 功能
      * @param no
-     * @param customer
+     * @param customer              session中的管理员
      * @return
      * @throws FindException
      */
     @GetMapping("/agree")
     @ResponseBody
-    public ReturnT agreeLoanApplication(String no,@SessionAttribute("user") Customer customer) throws FindException {
+    public ReturnT agreeLoanApplication(String no,@SessionAttribute("user1") Customer customer) throws FindException {
         loanService.agreeloanApplication(no,customer.getId());
         return ReturnT.SUCCESS;
     }
@@ -134,7 +134,7 @@ public class LoanApplicationController {
 
     @GetMapping("/notAgree")
     @ResponseBody
-    public ReturnT notAgreeLoanApplication(String no,@SessionAttribute("user") Customer customer){
+    public ReturnT notAgreeLoanApplication(String no,@SessionAttribute("user1") Customer customer){
         loanService.notAgreeloanApplication(no,customer.getId());
         return ReturnT.SUCCESS;
     }

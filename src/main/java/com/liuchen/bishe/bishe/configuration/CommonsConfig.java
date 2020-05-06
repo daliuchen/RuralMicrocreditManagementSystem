@@ -1,6 +1,8 @@
 package com.liuchen.bishe.bishe.configuration;
 
+import com.liuchen.bishe.bishe.controller.myInterceptor.LoginHandlerInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -20,7 +22,7 @@ public class CommonsConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/regiest").setViewName("regiest");
 
         //首页
-        registry.addViewController("/index").setViewName("index");
+        registry.addViewController("/index").setViewName("index/index");
 
         //客户
         registry.addViewController("/customer").setViewName("customer/customerIndex");
@@ -64,5 +66,16 @@ public class CommonsConfig extends WebMvcConfigurerAdapter {
         //找回密码
         registry.addViewController("/retirvtePassword").setViewName("retrivevePassword");
 
+    }
+
+
+    /**
+     * 注册 拦截器
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns("/","/regiest","/toLogin","/resource/**","/code","/picture/**","/idPicture/**","/retirvtePassword");
     }
 }

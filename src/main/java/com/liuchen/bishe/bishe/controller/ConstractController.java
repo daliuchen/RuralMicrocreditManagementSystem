@@ -104,7 +104,7 @@ public class ConstractController {
      */
     @GetMapping("/repayment")
     @ResponseBody
-    public ReturnT repayment(String no,String status,@SessionAttribute("user") Customer customer){
+    public ReturnT repayment(String no,String status,@SessionAttribute("user1") Customer customer){
         int customerId = customer.getId();
         if (status.trim().equals(ConstractEnum.CONSTRACT_ENUM_XUQI.getName())) {
             constractService.repayment(no.trim(),ConstractEnum.CONSTRACT_ENUM_YU_QI_MONEY,customerId);
@@ -143,17 +143,7 @@ public class ConstractController {
             throw new SystemErrorException();
         }
         model.put("contract",contract);
-        /**
-         * TODO:查看合同详情，有bug。PDF不能显示中文。
-         * 我的想法：
-         *  查看合同详情用pdf显示
-         *
-         * 2: 什么还没有弄
-         *  - 首页
-         *  - 用户登录之后页面的隐藏 和权限的管理
-         */
-
-        return "test1";
+        return "constract/constractIndeInfo";
     }
 
     @ResponseBody
@@ -196,7 +186,7 @@ public class ConstractController {
      * @param offset
      * @param limit
      * @param idCard
-     * @param customer
+     * @param customer      当前登录的用户
      * @return
      * @throws FindException
      */
@@ -208,6 +198,9 @@ public class ConstractController {
         PageInfo<Contract> pageInfo = constractService.findMyContract(offset, limit, id);
         return new ReturnT(pageInfo);
     }
+
+
+
 
 
 

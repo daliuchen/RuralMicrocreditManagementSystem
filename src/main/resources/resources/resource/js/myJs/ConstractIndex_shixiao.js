@@ -174,5 +174,5 @@ function deleteContract(no) {
 
 //查看合同详细
 function info(no) {
-    window.location.href="constract/deleteContract/"+no;
+    window.location.href= "constract/info/" + no + "/合同已经完成";
 }
