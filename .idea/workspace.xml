@@ -79,7 +79,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="463362cea19ad91ae67668c4ba789de965c9b311" />
+        <entry key="$PROJECT_DIR$" value="bcfc35b85f0bcaa5d2e2159266d62c4f549f33d1" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -587,6 +587,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="500" height="507" key="SwitcherDM/0.0.1440.900@0.0.1440.900" timestamp="1587631404017" />
+    <state x="412" y="171" key="Vcs.Push.Dialog.v2" timestamp="1588866762549">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="412" y="171" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588866762549" />
     <state x="538" y="341" width="363" height="231" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1581568533228">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
