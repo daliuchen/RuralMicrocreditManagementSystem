@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuchen.bishe.bishe.dao.LoanMaxYearMapper">
+
+<!--    public List<LoanMaxYear> findByMoney(BigDecimal money);-->
+
+    <select id="findByMoney" resultType="com.liuchen.bishe.bishe.vo.LoanMaxYearVo" parameterType="java.math.BigDecimal" >
+        select * from  t_loan_money where <![CDATA[ money >= #{money} ]]>
+    </select>
+
+
+
+</mapper>

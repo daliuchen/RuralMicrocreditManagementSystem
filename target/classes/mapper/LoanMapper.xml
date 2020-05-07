@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuchen.bishe.bishe.dao.LoanMapper">
+
+
+
+    <resultMap id="loanMapper" type="com.liuchen.bishe.bishe.entry.LoanApplication">
+         <id column="id" property="id"/>
+         <result column="no" property="no"/>
+        <result column="money" property="money"/>
+        <result column="time" property="time"/>
+        <result column="createDate" property="createDate"/>
+        <result column="status" property="status"/>
+        <result column="isDelete" property="isDelete"/>
+        <association property="customer"
+                     column="customerId"
+                     fetchType="eager"
+                     javaType="com.liuchen.bishe.bishe.entry.Customer"
+                     select="com.liuchen.bishe.bishe.dao.CustomerMapper.findCustomerById"/>
+
+
+        <association property="bondsman"
+                     column="bondsmanId"
+                     fetchType="eager"
+                     javaType="com.liuchen.bishe.bishe.entry.Customer"
+                     select="com.liuchen.bishe.bishe.dao.CustomerMapper.findCustomerById"/>
+
+
+        <association property="assessingOfficer"
+                     column="assessingOfficerId"
+                     fetchType="eager"
+                     javaType="com.liuchen.bishe.bishe.entry.Customer"
+                     select="com.liuchen.bishe.bishe.dao.CustomerMapper.findCustomerById"/>
+
+
+
+    </resultMap>
+
+<!--    public void addLoan(@Param("loan") LoanApplication loan);-->
+    <insert id="addLoan" useGeneratedKeys="true" keyProperty="id">
+                insert into t_loan_application (no, customerId, money, time, createDate,
+                                                bondsmanId, status, assessingOfficerId, isDelete
+                                                ) values
+                                                (#{loan.no},#{loan.customer.id},#{loan.money},#{loan.time},
+                                                 #{loan.createDate},#{loan.bondsman.id},#{loan.status},#{loan.assessingOfficer.id},
+                                                 #{loan.isDelete})
+    </insert>
+
+
+
+<!--    public List<LoanApplication> findLoanByCustomerId(int id);-->
+
+    <select id="findLoanByCustomerId" resultMap="loanMapper">
+        select * from t_loan_application where customerId = #{id} and isDelete=1 order by id desc
+    </select>
+
+
+<!--         int  upDateStatusByNo(@Param("no") String no,@Param("status") String status,int assessingOfficerId);-->
+    <update id="upDateStatusByNo" useGeneratedKeys="true" keyProperty="id" >
+        update t_loan_application
+        <set>
+           <if test="status != null">
+               status=#{status},
+           </if>
+           <if test="assessingOfficerId != -1">
+               assessingOfficerId=#{assessingOfficerId}
+           </if>
+
+        </set>
+             where no=#{no} and isDelete=1
+    </update>
+
+
+<!--    public List<LoanApplication> findLoanApplicationByIdCardAndStatus(@Param("customerId") int customerId,@Param("status") String status);-->
+
+    <select id="findLoanApplicationByIdCardAndStatus" resultMap="loanMapper">
+        select  * from t_loan_application
+        <where>
+            <if test="customerId != -1 ">
+                customerId=#{customerId}
+            </if>
+            <if test="status != null">
+                and status=#{status}
+            </if>
+                and isDelete=1
+        </where>
+    </select>
+
+
+
+<!--    public List<LoanApplication> findLoanByNoAndStatus(@Param("no") String no, @Param("status") String status);-->
+    <select id="findLoanByNoAndStatus" resultMap="loanMapper">
+        select * from  t_loan_application
+            <where>
+                <if test="no != null">
+                    no=#{no}
+                </if>
+                <if test="status != null">
+                    and status=#{status}
+                </if>
+            </where>
+    </select>
+
+
+
+<!--    public void updateLoanApplication(String no,String status);-->
+    <update id="updateLoanApplication">
+        update  t_loan_application set status=#{status} where no = #{no}
+    </update>
+
+
+
+
+<!--    LoanApplication getLoanApplicationById(int id);-->
+    <select id="getLoanApplicationById" resultMap="loanMapper">
+        select * from t_loan_application where id=#{id}
+    </select>
+
+
+    <select id="countLoanApplicationWithStatus" resultType="java.lang.Integer">
+        select count(1) from t_loan_application where status='未处理'
+    </select>
+
+<!--    int getLoanByNo(String no);-->
+    <select id="getLoanByNo" resultType="java.lang.Integer">
+        select `id` from t_loan_application where no=#{no}
+    </select>
+
+
+</mapper>

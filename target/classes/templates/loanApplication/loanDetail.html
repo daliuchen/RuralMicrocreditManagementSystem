@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/head :: common_head(~{::title},~{})}">
+    <title>贷款详细</title>
+</head>
+<body>
+<!--加载-->
+<div th:replace="~{commons/page-top :: common_top_onLoad}"></div>
+
+<!--  插入导航 -->
+<div th:replace="~{commons/page-top :: common_top}"></div>
+
+
+<!--主体-->
+<div class="main-container container-fluid">
+    <div class="page-container" style="">
+
+        <div th:replace="~{commons/page-top :: common_side}"></div>
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
+                </ol>
+            </div>
+            <div class="page-header position-relative">
+                <div class="header-title title-h1">贷款管理</div>
+            </div>
+
+            <div class="page-body">
+                <!--                这里是页面主体 显示部分 开始-->
+
+                <!--基本表单开始--->
+                <div class="col-lg-12">
+                    <div class="widget">
+                        <div class="widget-header">
+                            贷款详情
+                        </div>
+                        <div class="widget-body">
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--                                    用户的详细信息-->
+
+                                    <div class="row  row-margin-top">
+                                        <label class="col-md-2">姓名:</label>
+                                        <label class="col-md-2" th:text="${loan.customer.name}"></label>
+                                    </div>
+
+                                    <div class="row row-margin-top">
+                                        <label class="col-md-3">身份证号:</label>
+                                        <label class="col-md-2" style="left: -48px" th:text="${loan.customer.idCard}"></label>
+                                    </div>
+
+                                    <input type="hidden" id="customerId" th:value="${loan.customer.id}">
+
+                                    <div class="row row-margin-top">
+                                        <label class="col-md-2">申请号:</label>
+                                        <label class="col-md-2"  id="loanNo" th:text="${loan.no}"></label>
+                                    </div>
+
+                                    <div class="row row-margin-top">
+                                        <label class="col-md-3">贷款金额:</label>
+                                        <label class="col-md-3" style="left: -42px">[[${loan.money}]]</label>
+                                    </div>
+
+                                    <div class="row row-margin-top">
+                                        <label class="col-md-3">贷款时间(年):</label>
+                                        <label id="loanTime" class="col-md-2" style="left: -40px"  th:text="${loan.time}"></label>
+                                    </div>
+
+                                    <div class="row row-margin-top">
+                                        <label class="col-md-3">申请时间:</label>
+                                        <label id="loanCreateTime" class="col-md-5" style="left: -45px" th:text="${loan.createDate}"></label>
+                                    </div>
+
+                                    <div class="row row-margin-top">
+                                        <label class="col-md-2">担保人:</label>
+                                        <label class="col-md-2" th:text="${loan.bondsman.name}"></label>
+                                    </div>
+
+                                    <div class="row row-margin-top">
+                                        <label class="col-md-3">担保人身份证号:</label>
+                                        <label class="col-md-2" style="left: -10px" th:text="${loan.bondsman.idCard}"></label>
+                                    </div>
+                                    <input type="hidden" name="loanId" th:value="${loan.bondsman.id}" id="loanId">
+
+
+                                    <div class="row row-margin-top" style="margin-top: 30px">
+                                      <div class="col-md-12">
+
+                                          <div class="row">
+                                              <label class="col-md-3">担保人信用分:</label>
+                                              <label class="col-md-3 col-md-offset-3"  id="userMessage1" style="color: red"></label>
+                                          </div>
+                                          <div class="row">
+
+                                              <div class="col-md-7 col-md-offset-3" style="height: 270px" id="loadCustomerCred">
+                                                  <!--   折线图表示用户信用分的变化情况 -->
+                                              </div>
+
+                                          </div>
+
+                                      </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <!--                                    图表-->
+                                    <div class="row">
+                                        <label class="col-md-3">用户信用分:</label>
+                                        <label class="col-md-3 col-md-offset-3"  id="userMessage" style="color: red"></label>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-7 col-md-offset-3" style="height: 270px" id="customerCred">
+                                            <!--   折线图表示用户信用分的变化情况 -->
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row">
+
+                                        <label class="col-md-3">用户贷款(年份):</label>
+                                       <select style="border: 1px solid black;width: 200px;" id="yearSelect">
+                                           <option value="-1">---请选择---</option>
+                                       </select>
+                                        <div class="col-md-7" style="height: 270px" id="customerLoan">
+                                            <!--   折线图表示用户贷款的情况按照年份来区 -->
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        <div class="row">
+                            <a th:href="@{/shenpi}"><input type="button" class="btn btn-default" style="margin-left: 10px" value="返回"></a>
+                            <a><input type="button" class="btn btn-danger col-md-offset-4 btn-lg" id="notAgree" value="不通过"></a>
+                            <a ><input type="button" class="btn btn-success btn-lg" style="margin-left: 10px" id="agree" value="通过"></a>
+                        </div>
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <!--                这里是页面主体 显示部分 结束-->
+            </div><!---page-body---->
+        </div><!--page-wrapper--->
+    </div>
+</div>
+
+<div th:replace="~{commons/onLoanJs :: js}"></div>
+<script th:src="@{/resource/js/myJs/loanDetail.js}"></script>
+
+
+</body>
+</html>

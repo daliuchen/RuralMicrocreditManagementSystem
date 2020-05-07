@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/head :: common_head(~{::title},~{})}">
+    <title>首页</title>
+
+</head>
+<body>
+<!--加载-->
+<div th:replace="~{commons/page-top :: common_top_onLoad}"></div>
+
+<!--  插入导航 -->
+<div th:replace="~{commons/page-top :: common_top}"></div>
+
+<!--主体-->
+<div class="main-container container-fluid">
+    <div class="page-container" style="">
+<!--       公共片段的引入-->
+        <div th:replace="~{commons/page-top :: common_side}"></div>
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a th:href="@{/index}">首页</a></li>
+                </ol>
+            </div>
+            <div class="page-header position-relative">
+                <div class="header-title title-h1">首页</div>
+            </div>
+
+            <div class="page-body">
+                <!--列表--->
+                <div class="row">
+
+                    <!--          分为两种展示
+
+                                  管理员：
+                                        用折线图或者柱状图显示 这一年来贷款合同的变化（按照每个月）
+                                  普通用户：
+                                        用折线图或者柱状图显示 用户的信用分的变化情况
+
+
+                    -->
+
+<!--                   提示面板  -->
+                    <div class="col-log-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="databox">
+                            <div class="data-left bg-orange" id="message1">test</div><!--
+                            ---><div class="data-right">
+                            <div class="databox-title text-orange" type="hidden" id="message11"></div>
+                            <div class="databox-text">代审批的申请</div>
+                            <div class="databox-icon text-orange"></div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-log-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="databox">
+                            <div class="data-left bg-green" id="message2">25%</div><!--
+                            ---><div class="data-right">
+                            <div class="databox-title text-green" id="message22"></div>
+                            <div class="databox-text">今天到期贷款</div>
+                            <div class="databox-icon text-green"></div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-log-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="databox">
+                            <div class="data-left bg-blue" id="message3">25%</div><!--
+                            ---><div class="data-right">
+                            <div class="databox-title text-blue" id="message33">10</div>
+                            <div class="databox-text">未到期贷款</div>
+                            <div class="databox-icon text-blue"></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-log-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="databox">
+                            <div class="data-left bg-mint" id="message4">25%</div><!--
+                            ---><div class="data-right">
+                            <div class="databox-title text-mint" id="message44">2</div>
+                            <div class="databox-text">逾期贷款</div>
+                            <div class="databox-icon text-mint"></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!--图表--->
+                <div class="widget">
+                    <div class="widget-header" >
+                        <div class="widget-caption row">贷款报告</div>
+
+                        <!---年份选择------>
+                        <div class="col-lg-push-10 col-md-2">
+                            <span>年份</span>
+<!--                            <select class="js-data-example-ajax4 " style="width: 200px"></select>-->
+                            <select id="yearSelect" style="width: 80px">
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="widget-body" >
+                        <div style="width: 100%;height: 450px" id="customerLoan"></div>
+                    </div>
+                    </div>
+                </div>
+            </div><!---page-body---->
+        </div><!--page-wrapper--->
+    </div>
+</div>
+
+<!--回到顶部--->
+<a id="backTop">
+    <i class="fa fa-angle-up"></i>
+</a>
+
+
+<!--设置--->
+
+
+
+<div th:replace="~{commons/onLoanJs :: js}"></div>
+<script th:src="@{/resource/js/myJs/index.js}"></script>
+</body>
+</html>

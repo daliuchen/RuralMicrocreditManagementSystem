@@ -1,0 +1,17 @@
+.page-sidebar,
+.navbar,
+.page-breadcrumbs,
+.page-header,
+.loading-container,
+.bs-callout,
+#setBox,
+.widget-header,
+.ui-test-hide{
+    display: none  !important;;
+}
+#setBox{
+    display: block  !important;;
+}
+.main-container .page-wrapper{
+    padding-left: 0 !important;
+}

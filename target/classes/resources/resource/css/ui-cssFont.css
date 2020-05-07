@@ -1,0 +1,210 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #eee;
+}
+.u-icon{
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+    /*border: 3px solid #fff;*/
+}
+.u-icon:before,
+.u-icon:after{
+    content: "";
+    position: absolute;
+    display: block;
+}
+/**/
+.u-cssIcon{
+    position: relative;
+    width: 128px;
+    height: 60px;
+    background-color: #f24a4b;
+    color: #fff;
+    line-height: 60px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+.u-cssIcon:before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-right:64px solid transparent;
+    border-bottom: 10px solid #fff;
+    border-left:64px solid transparent;
+}
+.u-cssIcon:before{
+    /*content: "";
+    position: absolute;*/
+    top: 0;
+    left: 0;
+    /*border-right:64px solid transparent;
+    border-top: 10px solid #fff;
+    border-left:64px solid transparent;*/
+}
+/**/
+.u-cssIcon1{
+    position: relative;
+    width: 128px;
+    height: 60px;
+    background-color: #f24a4b;
+    color: #fff;
+    line-height: 60px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+.u-cssIcon1:before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-right:64px solid transparent;
+    border-bottom: 10px solid #fff;
+    border-left:64px solid transparent;
+}
+.u-cssIcon1:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-right:64px solid transparent;
+    border-top: 10px solid #fff;
+    border-left:64px solid transparent;
+}
+
+/*home*/
+.icon{
+    background-color:#f24a4b;
+    width: 128px;
+    height: 60px;
+    line-height: 70px;
+    vertical-align: bottom;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.u-icon-home{
+    width: 30px;
+    height: 30px;
+    border: 3px solid #fff;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    transform:rotate(45deg);
+
+}
+.u-icon-home:before{
+    width: 28px;
+    height: 20px;
+    left: 2px;
+    top: 5px;
+    border: 3px solid #fff;
+    border-top: none;
+    transform:rotate(-45deg);
+
+}
+.u-icon-home:after{
+    width: 8px;
+    height: 14px;
+    bottom: 1px;
+    left: 14px;
+    border: 1px solid #fff;
+    transform:rotate(-45deg);
+}
+/*mail*/
+.u-icon-mail{
+    width: 35px;
+    height: 23px;
+    overflow: hidden;
+}
+.u-icon-mail:before{
+    width: 45px;
+    height: 45px;
+    top: -38px;
+    left: -5px;
+    border: 2px solid #fff;
+    transform:rotate(45deg);
+}
+.u-icon-mail:after{
+    width: 35px;
+    height: 23px;
+    border: 3px solid #fff;
+}
+/*rss*/
+.u-icon-rss{
+    width: 35px;
+    height: 35px;
+    border: 3px solid #fff;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    /*overflow: hidden;*/
+}
+.u-icon-rss:before{
+    width: 6px;
+    height: 6px;
+    bottom: 0;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.u-icon-rss:after{
+    width: 23px;
+    height: 23px;
+    top: 5px;
+    left: 3px;
+    border: 3px solid #fff;
+    /*box-shadow: inset 0 0 0 2px,0 0 0 2px;*/
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+}
+/*u-icon-hamburger*/
+.u-icon-hamburger,
+.u-icon-hamburger:before,
+.u-icon-hamburger:after{
+    width: 20px;
+    height: 2px;
+    background-color: #fff;
+}
+.u-icon-hamburger:before{
+    top: -7px;
+    height: 3px;
+}
+.u-icon-hamburger:after{
+    top: -13px;
+}
+/*u-icon-plus*/
+.u-icon-plus{
+    width: 42px;
+    height: 42px;
+}
+.u-icon-plus:before{
+    width: 30px;
+    height: 2px;
+    left: 4px;
+    top: 20px;
+    background-color: #fff;
+}
+.u-icon-plus:after{
+    width: 2px;
+    height: 30px;
+    left: 18px;
+    bottom: 4px;
+    background-color: #fff;
+}
+/*u-icon-cross*/
+/*
+.u-icon-cross{
+    width: 42px;
+    height: 42px;
+    border: 1px solid red;
+}
+.u-icon-cross:before{
+    width:42px;
+    height: 2px;
+    background-color: #fff;
+}*/

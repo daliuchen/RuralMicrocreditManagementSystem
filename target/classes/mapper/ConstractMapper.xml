@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuchen.bishe.bishe.dao.ConstractMapper">
+    
+   <resultMap id="contractMapping" type="com.liuchen.bishe.bishe.entry.Contract">
+       <id property="id" column="id"/>
+       <result property="no" column="no"/>
+       <result property="detail" column="detail"/>
+       <result property="begin" column="begin"/>
+       <result property="end" column="end"/>
+       <result property="money" column="money"/>
+       <result property="moneyBack" column="moneyBack"/>
+       <result property="status" column="status"/>
+       <result property="contractStatus" column="contractStatus"/>
+       <association property="customer"
+                    column="customerId"
+                    fetchType="eager"
+                    javaType="com.liuchen.bishe.bishe.entry.Customer"
+                    select="com.liuchen.bishe.bishe.dao.CustomerMapper.findCustomerById">
+       </association>
+       <association property="assessingOfficer"
+                    column="assessingOfficerId"
+                    fetchType="eager"
+                    javaType="com.liuchen.bishe.bishe.entry.Customer"
+                    select="com.liuchen.bishe.bishe.dao.CustomerMapper.findCustomerById">
+       </association>
+       <association property="loan"
+                    column="loanId"
+                    fetchType="eager"
+                    javaType="com.liuchen.bishe.bishe.entry.LoanApplication"
+                    select="com.liuchen.bishe.bishe.dao.LoanMapper.getLoanApplicationById">
+       </association>
+
+
+   </resultMap>
+    <sql id="sql">
+            id ,no,detail,begin,end,money,moneyBack,status,
+            contractStatus,
+            customerId,assessingOfficerId,loanId
+    </sql>
+
+
+<!--    void addContract(@Param("contract") Contract contract);-->
+    <insert id="addContract" useGeneratedKeys="true" keyProperty="id">
+        insert into  t_contract ( no, customerId, money, status, isDelete, assessingOfficerId, loanId)
+        values (
+                #{contract.no},#{contract.customer.id},#{contract.money},#{contract.status},
+                #{contract.isDelete},#{contract.assessingOfficer.id},#{contract.loan.id}
+               )
+    </insert>
+
+
+
+<!--    void updateContractWithZifang(String no,Date begin,Date end,String staus);-->
+    <update id="updateContractWithZifang">
+        update  t_contract set begin=#{begin},
+                               end=#{end},
+                               status=#{staus}
+                            where no=#{no} and isDelete=1
+    </update>
+
+
+
+    <!--    int deleteContractByNo(String no);-->
+    <update id="deleteContractByNo" parameterType="string">
+
+        update t_contract set isDelete=0
+                            where no=#{no}
+
+    </update>
+
+
+    <!--    List<Contract> listConstractByCustomerIdAndStatus(@Param("customerId") int customerId, @Param("status") String status);-->
+    <select id="listConstractByCustomerIdAndStatus" resultMap="contractMapping" >
+            select
+                <include refid="sql"></include>
+            from  t_contract
+            <where>
+                <if test="customerId != -1">
+                    customerId=#{customerId}
+                </if>
+                <if test="status != null">
+                   and status=#{status}
+                </if>
+                and isDelete=1
+            </where>
+    </select>
+
+<!--        List<Contract> listContractByCustomerId(@Param("customerId") int customerId);-->
+    <select id="listContractByCustomerId" resultMap="contractMapping" >
+        select
+        <include refid="sql"></include>
+        from  t_contract
+        <where>
+            <if test="customerId != -1">
+                customerId=#{customerId}
+            </if>
+            and `status` != '甲方签署'
+            and `status` != '乙方签署'
+            and `status` != '乙方不签署'
+            and isDelete=1
+        </where>
+            order by id desc
+    </select>
+
+
+<!--    public List<CustomerContractMonthVo> findCustomerConstractWithMonth(@Param("customerId") int customerId,@Param("year") String year,@Param("contractStatus") String contractStatus);-->
+    <select id="findCustomerConstractWithMonth" resultType="com.liuchen.bishe.bishe.vo.CustomerContractMonthVo">
+        select count(begin) as  count ,month(begin)  as month from t_contract
+                                            <where>
+
+                                                <if test="year != null">
+                                                    year(begin)=#{year}
+                                                </if>
+
+                                                <if test="contractStatus != null">
+                                                    and contractStatus=#{contractStatus}
+                                                </if>
+
+                                                <if test="customerId != -1">
+                                                    and customerId=#{customerId}
+                                                </if>
+
+                                                and isDelete = 1
+                                            </where>
+                                                     group by month(begin)
+    </select>
+
+
+
+
+<!--    public List<Integer> selectConstractMinMaxYear(int customerId);-->
+    <select id="selectConstractMinMaxYear" resultType="java.lang.Integer">
+        select distinct year(begin) from t_contract
+            <where>
+            <if test="_parameter != -1">
+             customerId=#{customerId}
+            </if>
+                and isDelete=1
+            </where>
+            order by year(begin) desc
+    </select>
+
+
+
+
+
+
+    <!--    void updateContract(@Param("no") String no ,@Param("status") String status,@Param("customerId") int customerId);-->
+    <update id="updateContract">
+        update t_contract set status='合同已经完成',
+                              contractStatus=#{status},
+                              assessingOfficerId = #{customerId}
+        where no=#{no}
+          and isDelete=1
+    </update>
+
+
+<!--    void updateContractQueratz();-->
+    <update id="updateContractQueratz">
+        update t_contract set status='今天到期' where id in (
+            select id from
+                (select id
+                 from t_contract
+                 where status='逾期'
+                   and date_format(begin,'%Y-%m') = date_format(now(),'%Y-%m')) a1
+        )
+    </update>
+
+
+    <update id="updateContractQueratzYuQi" >
+        update t_contract
+        set status='逾期'
+        where id in
+        (select id from
+        (select id from t_contract where end is not null
+        and date(begin) &lt; date(now())
+        and moneyBack is null
+        and status != '逾期'
+        and status != '甲方签署'
+        and status != '乙方签署'
+        and status != '乙方不签署') as a
+        )
+    </update>
+
+<!--    void updateByLoanApplicationNo(int loanId,String status);-->
+    <update id="updateByLoanApplicationNo">
+             update t_contract set status=#{status}
+                            where loanId=#{loanId}
+
+    </update>
+
+
+    <!--    Contract getContractByno(String no,String status);-->
+    <select id="getContractByno" resultMap="contractMapping">
+        select
+        <include refid="sql"></include>
+        from  t_contract
+        <where>
+            <if test="no != null">
+                no = #{no}
+            </if>
+            <if test="status != null">
+               and status = #{status}
+            </if>
+        </where>
+    </select>
+
+
+<!--    List<Contract> listContractByContractStatus(String contractStatus);-->
+    <select id="listContractByContractStatus" resultMap="contractMapping">
+        select
+        <include refid="sql"></include>
+        from t_contract
+        where
+        contractStatus=#{contractStatus}
+    </select>
+
+
+<!--    int infoContract(String status);-->
+    <select id="countContractByStatus" resultType="java.lang.Integer">
+        select count(1) from t_contract where `status` = #{status}
+    </select>
+
+
+<!--    String getNoByLoanId(int loanId);-->
+    <select id="getNoByLoanId" resultType="java.lang.String">
+        select `no` from t_contract where loanId=#{loanId}
+    </select>
+
+
+
+
+</mapper>

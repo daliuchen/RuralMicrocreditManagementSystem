@@ -152,14 +152,15 @@ function deleteContract(no) {
         closeOnCancel: false
     }, function(isConfirm) {
         if (isConfirm) {
-            $.get("constract/deleteContract",
-                {
-                    no:no
-                },
+            $.get("constract/deleteContract/"+no,
+                {},
                 function (obj) {
                     if(obj.code == 200){
                         //成功
                         swal("成功!", "删除成功！", "success");
+                        window.location.href = "constractnoshixiao";
+                    }else{
+                        //TODO: 500页面
                         window.location.href = "constractnoshixiao";
                     }
                 });

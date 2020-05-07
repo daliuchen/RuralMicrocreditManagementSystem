@@ -149,7 +149,8 @@ public class ConstractController {
     @ResponseBody
     @GetMapping("/deleteContract/{no}")
     public ReturnT deleteContractByNo(@PathVariable("no") String no) throws DeleteException {
-        constractService.deleteContractByNo(no);
+
+        constractService.deleteContractByNo(no.trim());
         return ReturnT.SUCCESS;
     }
 
