@@ -83,7 +83,8 @@ public class AdminController {
                             @RequestParam("address2") String address2,
                             @RequestParam("address3") String address3
     ) throws FindException {
-
+        String trim = customer.getIdCard().trim();
+        customer.setIdCard(trim);
 
 
         String address = AddressUtil.spellingAddress(address1, address2, address3);

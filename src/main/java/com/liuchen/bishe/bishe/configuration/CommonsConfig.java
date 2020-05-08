@@ -76,6 +76,6 @@ public class CommonsConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/","/regiest","/toLogin","/resource/**","/code","/picture/**","/idPicture/**","/retirvtePassword");
+                .excludePathPatterns("/","/regiest","/toLogin","/resource/**","/code","/picture/**","/idPicture/**","/retirvtePassword","/address/**","/user/add","/getRCode","/user/retriveve");
     }
 }

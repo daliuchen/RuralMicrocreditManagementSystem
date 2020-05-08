@@ -75,11 +75,14 @@ $(function () {
             var date = new Date();
             var fullYear = date .getFullYear();
             $.each(datas,function (index,dataObj) {
-                if(fullYear == dataObj){
-                    $("#yearSelect").append('<option value="'+dataObj+'" selected="selected">'+dataObj+'</option>');
-                }else{
-                    $("#yearSelect").append('<option value="'+dataObj+'">'+dataObj+'</option>');
+                if(dataObj != null || dataObj != 'null'){
+                    if(fullYear == dataObj){
+                        $("#yearSelect").append('<option value="'+dataObj+'" selected="selected">'+dataObj+'</option>');
+                    }else{
+                        $("#yearSelect").append('<option value="'+dataObj+'">'+dataObj+'</option>');
+                    }
                 }
+
 
             })
         }else{

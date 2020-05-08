@@ -112,7 +112,13 @@ public class RestController {
             return ReturnT.FAIL;
         }
         log.info("----> 该用户有贷款");
-        return new ReturnT(years);
+        ArrayList<Integer> integers = new ArrayList<>();
+        if(years != null){
+            integers.add(years.get(0));
+            integers.add(years.get(1));
+        }
+
+        return new ReturnT(integers);
     }
 
 

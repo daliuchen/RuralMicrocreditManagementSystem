@@ -87,9 +87,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(String idCard) {
-        customerMapper.deleteCustomer(idCard.trim());
         List<Customer> customers = customerMapper.findCustomerByIdCard(idCard, null);
         Customer customer = customers.get(0);
+        customerMapper.deleteCustomer(idCard.trim());
         scoreMapper.deleteScore(customer.getId());
     }
 

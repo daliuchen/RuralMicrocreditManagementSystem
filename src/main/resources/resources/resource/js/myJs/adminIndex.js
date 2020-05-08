@@ -211,8 +211,9 @@ $(function () {
             return;
         }
 
-        $("#searchCustomerInput").val("");//将搜索框里面清空
+
         $("#adminTable").bootstrapTable("refresh",{query: {idCard:idCard}});
+        $("#searchCustomerInput").val("");//将搜索框里面清空
 
     });
 
@@ -242,9 +243,9 @@ function deleteAdmin(obj) {
                 success:function (obj) {
                     if (obj.code==200){
                         swal("删除!", "删除成功！", "success")
-                        $("#adminTable").bootstrapTable('refresh');
+                        $("#adminTable").bootstrapTable("refresh",{query: {idCard:''}});
                     }else{
-                        //TODO:删除admin失败，这里打算用 用错误页面
+
                     }
                 }
             })

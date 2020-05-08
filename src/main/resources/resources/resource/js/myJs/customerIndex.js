@@ -203,7 +203,7 @@ $(function () {
             alert("请输入")
             return;
         }
-        $("#customerTable").bootstrapTable("refresh",{query: {text:customer}});
+        $("#customerTable").bootstrapTable('refresh');
     });
 
 });

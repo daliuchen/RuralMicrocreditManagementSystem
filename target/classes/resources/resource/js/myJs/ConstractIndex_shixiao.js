@@ -159,6 +159,9 @@ function deleteContract(no) {
                         //成功
                         swal("成功!", "删除成功！", "success");
                         window.location.href = "constractnoshixiao";
+                    }else{
+                        //TODO: 500页面
+                        window.location.href = "constractnoshixiao";
                     }
                 });
 

@@ -68,7 +68,7 @@ public class IndexServiceImpl implements IndexService {
             tiQian = empty;
         }else{
             //有数据
-            for (CustomerContractMonthVo vo : constract1) {
+            for (CustomerContractMonthVo vo : constract2) {
                 b[vo.getMonth()-1] = vo.getCount();
             }
             for (int i = 0; i < a.length; i++) {
@@ -82,7 +82,7 @@ public class IndexServiceImpl implements IndexService {
             yuQi = empty;
         }else{
             //有数据
-            for (CustomerContractMonthVo vo : constract1) {
+            for (CustomerContractMonthVo vo : constract3) {
                 c[vo.getMonth()-1] = vo.getCount();
             }
             for (int i = 0; i < a.length; i++) {

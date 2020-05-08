@@ -57,7 +57,7 @@ public class SendEmailImpl  implements SendEmail {
     public void sendEmail(String email, String rCode) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
-        helper.setFrom("1178503733@qq.com");
+        helper.setFrom("liuxiaocheng386@163.com");
         helper.setTo(email);
         helper.setSubject("验证码");
         helper.setText("您的验证码是"+rCode+"转发给他人可能导致账号以及财产不安全，请勿泄漏，谨防被骗");

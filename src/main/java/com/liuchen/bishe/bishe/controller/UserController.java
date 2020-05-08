@@ -12,6 +12,7 @@ import com.liuchen.bishe.bishe.myEnum.RoleEnum;
 import com.liuchen.bishe.bishe.service.CustomerService;
 import com.liuchen.bishe.bishe.util.AddressUtil;
 import com.liuchen.bishe.bishe.vo.ReturnT;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +54,7 @@ public class UserController {
      * @throws FindException
      */
     @PostMapping("/login")
-    public ModelAndView doLogin(RedirectAttributes attributes, @NotNull String account, @NotNull String password, @NotNull String code, HttpSession session)   {
+    public ModelAndView doLogin(RedirectAttributes attributes,  String account,  String password,  String code, HttpSession session)   {
         ModelAndView modelAndView = new ModelAndView();
 
         String role = null;
@@ -69,7 +70,7 @@ public class UserController {
 
 
         try {
-            customer = customerService.validateCustomer(account, password);
+            customer = customerService.validateCustomer(account, password.trim());
             //说明是普通用户
             log.debug(" ----》 普通用户  登录  用户名：{}  用户idCard {}  用户role {}",customer.getName(),customer.getIdCard(),customer.getRole());
             role="0";
@@ -146,6 +147,8 @@ public class UserController {
 
     ) throws FindException {
 
+        String trim = customer.getIdCard().trim();
+        customer.setIdCard(trim);
 
         String address = AddressUtil.spellingAddress(address1, address2, address3);
         customer.setAddress(address);
@@ -229,9 +232,15 @@ public class UserController {
     @ResponseBody
     public ReturnT deleteCustomerS(@RequestParam(value = "idCards[]") String[] idCards) {
         System.out.println(idCards);
+        ArrayList<java.lang.String> strings = new ArrayList<>();
 
+        for (String idCard : idCards) {
+            if(idCard.equals("") == false){
+                strings.add(idCard);
+            }
+        }
         for (String id :
-                idCards) {
+                strings) {
             customerService.deleteCustomer(id);
         }
         return ReturnT.SUCCESS;

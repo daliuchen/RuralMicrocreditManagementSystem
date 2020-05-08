@@ -41,9 +41,11 @@
 <!--注册-->
 <div class="register-form register-box">
     <p class="form-title"><small> 为用户提供专业的服务</small></p>
+
+
     <form class="form-horizontal form-signin" id="registerForm" method="post" th:action="@{/user/add}"
           enctype="multipart/form-data"
-        >
+    >
         <div class="row">
             <div class="col-sm-12">
                 <div class="row">
@@ -56,23 +58,25 @@
                             <p class="col-sm-12 form-upload-title">二寸免冠照片，最大500KB</p>
                         </div>
                     </div>
-<!--                   用来区分是添加页面还是注册页面 -->
-                    <input name="addCustomer" value="-1" type="hidden"/>
+
+                    <!--                                            用来区分 是添加用户页面还是注册页面-->
+                    <input type="hidden" name="addCustomer" value="-1">
+
 
 
                     <div class="col-sm-8 pull-left-lg">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">姓名</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" placeholder="张狗蛋" name="name"
-                                     value="张全蛋">
+                                <input type="text" class="form-control" placeholder="姓名" name="name"
+                                >
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">身份证号</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" placeholder="身份证号" name="idCard"
-                                value="610322199876547389">
+                                >
                             </div>
                         </div>
                         <div class="form-group">
@@ -102,8 +106,8 @@
                        data-bv-different="true" data-bv-different-field="userName" data-bv-different-message="密码不能与用户名相同"
                        data-bv-message="用户名无效"
                        pattern="[a-zA-Z0-9]+"
-                       value="zaq12wsx"
-                      >
+
+                >
             </div>
         </div>
         <div class="form-group">
@@ -113,20 +117,20 @@
                        required data-bv-notempty-message="密码是必填的，不能为空"
                        data-bv-identical="true" data-bv-identical-field="password" data-bv-identical-message="码和确认密码不同"
                        data-bv-different="true" data-bv-different-field="userName" data-bv-different-message="密码不能与用户名相同"
-                        value="zaq12wsx"
+
                 >
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">电话</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="13500000000" name="phone" value="13232344354">
+                <input type="text" class="form-control" placeholder="请输入电话号号码" name="phone" >
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">邮箱</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="xxxxxx@qq.com" name="email" value="117850@qq.com">
+                <input type="text" class="form-control" placeholder="请输入邮箱地址" name="email">
             </div>
         </div>
 
@@ -140,7 +144,7 @@
                     <div class="col-md-3">
 
 
-                        <select id="select1" class="form-control" name="address1">
+                        <select id="select1" class="form-control" name="address1" style="width: 200px;">
                             <option>省</option>
 
                         </select>
@@ -149,7 +153,7 @@
                     <div class="col-md-3">
 
 
-                        <select id="select2" class="form-control" name="address2">
+                        <select id="select2" class="form-control" name="address2" style="width: 200px;">
                             <option>市</option>
 
                         </select>
@@ -159,7 +163,7 @@
                     <div class="col-md-3">
 
 
-                        <select id="select3" class="form-control" name="address3">
+                        <select id="select3" class="form-control" name="address3" style="width: 200px;">
                             <option >区|县</option>
                         </select>
 
@@ -181,14 +185,14 @@
         </div>
         <div class="form-group">
             <div class=" col-sm-offset-2 col-sm-9">
-                <button class="btn btn-default btn-primary btn-block btn-register" type="submit" data-href="login.html" data-filter="#registerForm">注册</button>
+                <button class="btn btn-default btn-primary btn-block btn-register" type="submit" data-href="login.html" data-filter="#registerForm">提交</button>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-sm-11 text-right">
                 <button type="button" class="btn btn-warning  "
-                       id="fileUploadIdCard" >
+                        id="fileUploadIdCard" >
                     <i class="glyphicon glyphicon-circle-arrow-up"></i>上传身份证
                 </button>
                 <input id="fileIdCard" type="file" class="" style="display: none" name="idpicture1">
@@ -203,14 +207,8 @@
 <div class="footer text-center">
     农村小额贷款@刘晨
 </div>
-<script th:src="@{/resource/lib/jquery/jquery.min.js}"></script>
-<script th:src="@{/resource/plugins/validator/js/bootstrapValidator.min.js}"></script>
-<script th:src="@{/resource/plugins/mock/mock-min.js}"></script>
-<script th:src="@{/resource/js/api.js}"></script>
-<script th:src="@{/resource/js/util.js}"></script>
-<script th:src="@{/resource/js/dosc.js}"></script>
-<script th:src="@{/resource/plugins/select2/js/select2.min.js}"></script>
-<script th:src="@{/resource/plugins/select2/js/i18n/zh-CN.js}"></script>
+<div th:replace="~{commons/onLoanJs :: js}"></div>
+
 
 <script>
 
@@ -219,17 +217,33 @@
 
 
 
+    $("#password2").blur(function () {
+        var p1 =  $("#password1").val();
+        var p2 =  $("#password2").val();
+        if(p2.trim() != p1.trim()){
+            alert("输入密码不一致，重新输入")
+            $("#password1").val("");
+            $("#password2").val("");
+            return;
+        }
+        alert("密码一致");
+    });
 
 
 
     $(function () {
 
+
+
+
+
+
         //发送省ajax
         $.get("address",{
             id:"0"
         },function (date) {
+            console.log(date)
             $("#select1").empty()
-            console.log(date);
             $.each(date,function (index,item) {
                 $("#select1").append("<option value="+item.id+">"+item.text+" </option>")
             });
@@ -257,13 +271,12 @@
         $("#select2").change(function () {
             var selectObj = $(this).children('option:selected');
             var aValue = selectObj.attr("value");
-            $("#select3").empty()
-            $("#select3").append("<option value='-2'>区|县</option>");
-
+            console.log(aValue)
             $.get("address",{
                 id:aValue
             },function (date) {
                 $("#select3").empty()
+                $("#select3").append("<option value='-2'>区|县</option>");
                 console.log(date);
                 $.each(date,function (index,item) {
                     $("#select3").append("<option value="+item.id+">"+item.text+" </option>")
@@ -271,7 +284,8 @@
             });
 
 
-        })
+        });
+
 
 
 
