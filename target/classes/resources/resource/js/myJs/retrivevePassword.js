@@ -58,7 +58,7 @@ $(function () {
 
     //提交
     $("#submit").click(function () {
-        alert("1")
+
         $.post("user/retriveve",$("form").serialize(),
                 function (obj) {
                     if(obj.code == 200){

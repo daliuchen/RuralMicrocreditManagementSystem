@@ -162,7 +162,7 @@
             select id from
                 (select id
                  from t_contract
-                 where status='逾期'
+                 where status='未到期'
                    and date_format(begin,'%Y-%m') = date_format(now(),'%Y-%m')) a1
         )
     </update>

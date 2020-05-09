@@ -35,7 +35,7 @@ $(function () {
         },
         responseHandler: function (res) {
             if (res.code == 200) {
-                console.log(res);
+
 
                 //成功获取
                 var constracts = res.content.list;
